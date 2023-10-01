@@ -5,7 +5,7 @@ const express = require("express");
 const mysql = require('mysql2')
 
 const PORT = 4000;
-const DB_URL = "mysql://cb56ecbzlkb4mnwsmulo:pscale_pw_4IjntQJQHnGhwpmgqnjwgJyJRmFYWwBfOBSXEt3gbhV@aws.connect.psdb.cloud/api_2?ssl={\"rejectUnauthorized\":true}";
+const DB_URL = process.env.DATABASE_URL;
 
 const app = express();
 // app.use(
