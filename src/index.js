@@ -5,8 +5,10 @@ const express = require("express");
 // const cors = require("cors");
 const mysql = require('mysql2');
 
-const PORT = 4000;
-const DB_URL = process.env.DATABASE_URL;
+const Empresa = require("./rotas/Empresa");
+const Funcionario = require("./rotas/Funcionario");
+
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 // app.use(
@@ -16,17 +18,18 @@ const app = express();
 app.listen(
     PORT,
     function() {
-        console.log(`BACK API_2 aberto na porta ${PORT} `);
+        console.log(`API Hermez aberta na porta ${PORT}`);
     }
 );
 
 app.get(
     '/',
     function(req, res) {
-        res.send('BACK está rodando');
+        res.send('API Hermez');
     }
 );
 
+// Teste de conexão temporario
 app.get(
     '/teste',
     async function(req, res) {
@@ -55,5 +58,8 @@ app.get(
         dbConn.end();
     }
 );
+
+app.use("/empresa", Empresa);
+app.use("/funcionario", Funcionario);
 
 module.exports = app;
