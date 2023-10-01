@@ -1,8 +1,9 @@
 "use strict"
 
+require('dotenv').config();
 const express = require("express");
 // const cors = require("cors");
-const mysql = require('mysql2')
+const mysql = require('mysql2');
 
 const PORT = 4000;
 const DB_URL = process.env.DATABASE_URL;
