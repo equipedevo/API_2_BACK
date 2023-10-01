@@ -29,8 +29,16 @@ app.get(
 
 app.get(
     '/teste',
-    async function(req, res) {        
-        const dbConn = mysql.createConnection(DB_URL);
+    async function(req, res) {
+        const dbConn = mysql.createConnection({
+            host: process.env.DATABASE_HOST,
+            user: process.env.DATABASE_USERNAME,
+            password: process.env.DATABASE_PASSWORD,
+            ssl: {
+                rejectUnauthorized: false
+            }
+        });
+        // const dbConn = mysql.createConnection(DB_URL);
 
         dbConn.query(
             'SHOW TABLES',
