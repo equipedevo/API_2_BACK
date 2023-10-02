@@ -3,10 +3,11 @@
 require('dotenv').config();
 const express = require("express");
 // const cors = require("cors");
-const mysql = require('mysql2');
 
 const Empresa = require("./rotas/Empresa");
 const Funcionario = require("./rotas/Funcionario");
+const Administrador = require("./rotas/Administrador");
+const { CreateConnection, EndConnection } = require('./connection');
 
 const PORT = process.env.PORT || 3001;
 
@@ -33,16 +34,8 @@ app.get(
 app.get(
     '/teste',
     async function(req, res) {
-        const dbConn = mysql.createConnection({
-            host: process.env.DATABASE_HOST,
-            user: process.env.DATABASE_USERNAME,
-            password: process.env.DATABASE_PASSWORD,
-            ssl: {
-                rejectUnauthorized: false
-            }
-        });
+        const dbConn = CreateConnection();
         // const dbConn = mysql.createConnection(DB_URL);
-
         dbConn.query(
             'SHOW TABLES',
             function(err, rows, fields) {
@@ -55,11 +48,12 @@ app.get(
             }
         );
 
-        dbConn.end();
+        EndConnection(dbConn);
     }
 );
 
 app.use("/empresa", Empresa);
 app.use("/funcionario", Funcionario);
+app.use("/administrador", Administrador);
 
 module.exports = app;
