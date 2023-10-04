@@ -54,6 +54,5 @@ app.get(
 
 app.use("/empresa", Empresa);
 app.use("/funcionario", Funcionario);
-app.use("/administrador", Administrador);
 
 module.exports = app;

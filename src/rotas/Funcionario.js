@@ -5,7 +5,7 @@ const router = express.Router();
 const { CreateConnection, EndConnection } = require('../connection');
 
 router.post(
-    '/cadastro',
+    '/cadastrar',
     function(req, res){
         const dbConn = CreateConnection();
         dbConn.query(
