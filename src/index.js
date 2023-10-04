@@ -6,6 +6,7 @@ const express = require("express");
 
 const Empresa = require("./rotas/Empresa");
 const Funcionario = require("./rotas/Funcionario");
+const Chamado = require("./rotas/Chamado");
 const { CreateConnection, EndConnection } = require('./connection');
 
 const PORT = process.env.PORT || 3001;
@@ -53,5 +54,6 @@ app.get(
 
 app.use("/empresa", Empresa);
 app.use("/funcionario", Funcionario);
+app.use("/chamado", Chamado);
 
 module.exports = app;
