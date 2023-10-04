@@ -7,7 +7,19 @@ const { CreateConnection, EndConnection } = require('../connection');
 router.get(
     '/getTodos',
     function (req, res) {
-        throw ("Cadastro da empresa não implementado");
+        const dbConn = CreateConnection();
+        dbConn.query(
+            `Select * From Chamado`,
+            function (err, rows, fields) {
+                if (err) {
+                    res.status(500).send(err);
+                }
+
+                res.status(200).send(rows);
+            }
+        );
+
+        EndConnection(dbConn);
     }
 );
 

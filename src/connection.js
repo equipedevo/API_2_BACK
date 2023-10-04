@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const mysql = require('mysql2');
 
-function CreateConnection(){
+function CreateConnection() {
     return mysql.createConnection({
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USERNAME,
@@ -13,8 +13,8 @@ function CreateConnection(){
     });
 }
 
-function EndConnection(conn){
+function EndConnection(conn) {
     conn.end();
 }
 
-module.exports = {CreateConnection, EndConnection};
+module.exports = { CreateConnection, EndConnection };
