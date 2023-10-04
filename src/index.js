@@ -6,7 +6,6 @@ const express = require("express");
 
 const Empresa = require("./rotas/Empresa");
 const Funcionario = require("./rotas/Funcionario");
-const Administrador = require("./rotas/Administrador");
 const { CreateConnection, EndConnection } = require('./connection');
 
 const PORT = process.env.PORT || 3001;
