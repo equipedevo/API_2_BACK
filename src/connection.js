@@ -17,4 +17,4 @@ function EndConnection(conn){
     conn.end();
 }
 
-module.exports = {CreateConnection, EndConnection};
+module.exports = { CreateConnection, EndConnection };
