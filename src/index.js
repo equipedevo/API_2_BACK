@@ -6,7 +6,6 @@ const express = require("express");
 
 const Empresa = require("./rotas/Empresa");
 const Funcionario = require("./rotas/Funcionario");
-const Administrador = require("./rotas/Administrador");
 const { CreateConnection, EndConnection } = require('./connection');
 
 const PORT = process.env.PORT || 3001;
@@ -35,25 +34,20 @@ app.get(
     '/teste',
     async function(req, res) {
         const dbConn = CreateConnection();
-        // const dbConn = mysql.createConnection(DB_URL);
         dbConn.query(
             'SHOW TABLES',
             function(err, rows, fields) {
                 if(err) {
-                    throw err;
+                    res.status(500).send(err);
                 }
-            
-                res.send(rows);
-                console.log(rows);
+                res.status(200).send(rows);
             }
         );
-
         EndConnection(dbConn);
     }
 );
 
 app.use("/empresa", Empresa);
 app.use("/funcionario", Funcionario);
-app.use("/administrador", Administrador);
 
 module.exports = app;
