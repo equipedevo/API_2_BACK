@@ -11,6 +11,7 @@ const { CreateConnection, EndConnection } = require('./connection');
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+app.use(require("body-parser").urlencoded({ extended: false }));
 // app.use(
 //     cors({ origin: ['https://api-2-back.vercel.app'] })
 // );

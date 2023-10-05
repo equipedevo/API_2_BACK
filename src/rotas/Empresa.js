@@ -4,7 +4,8 @@ const express = require('express');
 const router = express.Router();
 
 const { CreateConnection, EndConnection } = require('../connection');
-const { HashText, TextHashCompare } = require('../bcrypt')
+const { HashText, TextHashCompare } = require('../bcrypt');
+const bodyParser = require('body-parser');
 
 router.post(
     '/cadastro',
@@ -32,22 +33,25 @@ router.post(
 router.post(
     '/login',
     function(req, res) {
+        const email = req.body.email;
+        const senha = req.body.senha;
+
         const dbConn = CreateConnection();
         dbConn.query(
-            `select emp_senha from Empresa where emp_email = '${req.body.email}'`,
+            `select emp_senha from Empresa where emp_email = '${email}'`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).send(err);
                     return;
                 }
 
-                if(!result) {
-                    res.status(200).send("Não existe uma empresa com esse email no banco de dados.");
+                if(result.length <= 0) {
+                    res.status(200).send(`Não existe uma empresa com o email '${email}' no banco de dados.`);
                     return;
                 }
 
                 TextHashCompare(
-                    req.body.senha,
+                    senha,
                     result[0].emp_senha,
                     function(result) {
                         res.status(200).send(result);
