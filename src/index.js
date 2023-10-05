@@ -7,11 +7,11 @@ const express = require("express");
 const Empresa = require("./rotas/Empresa");
 const Funcionario = require("./rotas/Funcionario");
 const Chamado = require("./rotas/Chamado");
-const { CreateConnection, EndConnection } = require('./connection');
 
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+app.use(require("body-parser").urlencoded({ extended: false }));
 // app.use(
 //     cors({ origin: ['https://api-2-back.vercel.app'] })
 // );
@@ -27,28 +27,6 @@ app.get(
     '/',
     function(req, res) {
         res.send('API Hermez');
-    }
-);
-
-// Teste de conexão temporario
-app.get(
-    '/teste',
-    async function(req, res) {
-        const dbConn = CreateConnection();
-        // const dbConn = mysql.createConnection(DB_URL);
-        dbConn.query(
-            'SHOW TABLES',
-            function(err, rows, fields) {
-                if(err) {
-                    throw err;
-                }
-            
-                res.send(rows);
-                console.log(rows);
-            }
-        );
-
-        EndConnection(dbConn);
     }
 );
 
