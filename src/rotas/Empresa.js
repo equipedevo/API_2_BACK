@@ -21,7 +21,6 @@ function ChecarEmailCadastrado(email) {
         }
     );
     EndConnection(dbConn);
-    next();
 }
 
 router.post(
@@ -40,17 +39,17 @@ router.post(
                     return;
                 }
 
-                const nomeCompleto = req.body.nomeCompleto;
+                const nome = req.body.nome;
                 const cnpj = req.body.cnpj;
                 const email = req.body.email;
 
                 const dbConn = CreateConnection();
                 dbConn.query(
-                    `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values('${nomeCompleto}', '${cnpj}', '${hash}', '${email}')`,
+                    `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values('${nome}', '${cnpj}', '${hash}', '${email}')`,
                     function(err, result, fields) {
                         if(err) {
                             res.status(500).send(err);
-                            return
+                            return;
                         }
                         res.status(200).send(result);
                     }
