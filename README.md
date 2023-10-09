@@ -54,11 +54,14 @@ Recebe os os parâmetros `email` e `senha`.
 # Funcionario <span id="funcionario"></span>
 ## Cadastro <span id="funcionario.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/cadastro`
-Recebe os os parâmetros `x`, `y`, `z` e `w`.
-* `x`: Um campo de texto com ...
-* `y`: Um campo de texto com ...
-* `z`: Um campo de texto com ...
-* `w`: Um campo de texto com ...
+Recebe os os parâmetros `Nome`, <!-- `Função`,  --> `Email`, `Celular`, `Senha`, `Cargo` e `Emp_Cod`.
+* `Nome`: Um campo de texto com o nome do funcionário.
+* `Email`: Um campo de texto com o e-mail do funcionário.
+* `Celular`: Um campo de texto com o número de celular do funcionário.
+* `Senha`: Um campo de texto com a senha não criptografada.
+* `Cargo`: Um campo de número com o número do cargo que aquele funcionário pertence (Funcionário padrão: 1, Técnico: 2, Admin: 3).
+* `Emp_Cod`: Código da empresa que está cadastrando o usuário (Não será um campo para colocar qualquer código, será enviado para o back o código da empresa que está logada realizando o cadastro).
+<!-- * `Função`: Um campo de número com o número do cargo que aquele funcionário pertence (). -->
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
