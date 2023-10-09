@@ -76,7 +76,7 @@ router.post(
                 }
 
                 if(result.length <= 0) {
-                    res.status(500).send(`Não existe uma empresa com o email '${email}' no banco de dados.`);
+                    res.status(500).send(`Não existe uma empresa com o e-mail '${email}' no Banco de Dados.`);
                     return;
                 }
 

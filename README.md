@@ -72,22 +72,22 @@ Recebe os os parâmetros `Nome`, <!-- `Função`,  --> `Email`, `Celular`, `Senh
 
 ## Login <span id="funcionario.login"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/login`
-Recebe os os parâmetros `x` e `y`.
-* `x`: Um campo de texto com ...
-* `y`: Um campo de texto com ...
+Recebe os os parâmetros `Email` e `Senha`.
+* `Email`: Um campo de texto com o email do funcionário.
+* `Senha`: Um campo de texto com a senha não criptografada.
 
 ### Retornos
 * `200` - Login feito com sucesso. Um `json` como o abaixo será retornado.
 ```
 {
-    x: "a",
-    y: "b",
-    z: "c"
+    nome: "Funcionário Tal",
+    email: "funcemail@gmail.com",
+    celular: "(12) 98899-5893",
+    cargo: 1,
+    empresa: 3
 }
 ```
 * `500` - Erro. Um string descrevendo o erro será retornada.
 <hr>
 
 [Voltar ao topo](#sumário)
-
-
