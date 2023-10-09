@@ -2,15 +2,19 @@
 
 ## Sumário
 * [Empresa](#empresa)
+    * [Cadastro](#empresa.cadastro)
+    * [Login](#empresa.login)
 * [Funcionario](#funcionario)
+    * [Cadastro](#funcionario.cadastro)
+    * [Login](#funcionario.login)
 * [Chamado](#chamado)
+    * [Chamado](#chamado)
+    * [Chamado](#chamado)
 
+<br>
 
-<br><br><br><br><br>
-
-
-# Empresa
-## Cadastro
+# Empresa <span id="empresa"></span>
+## Cadastro <span id="empresa.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`empresa/cadastro`
 Recebe os os parâmetros `nome`, `cnpj`, `email` e `senha`.
 * `nome`: Um campo de texto com o nome da empresa.
@@ -20,12 +24,12 @@ Recebe os os parâmetros `nome`, `cnpj`, `email` e `senha`.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
-* `500` - Erro. Um string descrevendo o erro será retornada.
+* `500` - Erro. Uma string descrevendo o erro será retornada.
 <hr>
 
 [Voltar ao topo](#sumário)
 
-## Login
+## Login <span id="empresa.login"></span>
 ### POST - *hermezapi-back.vercel.app/*`empresa/login`
 Recebe os os parâmetros `email` e `senha`.
 * `email`: Um campo de texto com o email da empresa.
@@ -45,10 +49,10 @@ Recebe os os parâmetros `email` e `senha`.
 
 [Voltar ao topo](#sumário)
 
-<br><br><br>
+<br>
 
-# Funcionario
-## Cadastro
+# Funcionario <span id="funcionario"></span>
+## Cadastro <span id="funcionario.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/cadastro`
 Recebe os os parâmetros `x`, `y`, `z` e `w`.
 * `x`: Um campo de texto com ...
@@ -58,12 +62,12 @@ Recebe os os parâmetros `x`, `y`, `z` e `w`.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
-* `500` - Erro. Um string descrevendo o erro será retornada.
+* `500` - Erro. Uma string descrevendo o erro será retornada.
 <hr>
 
 [Voltar ao topo](#sumário)
 
-## Login
+## Login <span id="funcionario.login"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/login`
 Recebe os os parâmetros `x` e `y`.
 * `x`: Um campo de texto com ...
