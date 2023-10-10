@@ -2,6 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
+
 const { CreateConnection, EndConnection } = require('../connection');
 
 router.get(
@@ -9,10 +10,11 @@ router.get(
     function (req, res) {
         const dbConn = CreateConnection();
         dbConn.query(
-            `Select * From Chamado`,
+            `select * from Chamado`,
             function (err, rows, fields) {
                 if (err) {
                     res.status(500).send(err);
+                    return;
                 }
 
                 res.status(200).send(rows);

@@ -6,18 +6,20 @@ const router = express.Router();
 const { CreateConnection, EndConnection } = require('../connection');
 const { HashText, TextHashCompare } = require('../bcrypt');
 
-function ChecarEmailCadastrado(email) {
+function ChecarEmailCadastrado(email, callback) {
     const dbConn = CreateConnection();
     dbConn.query(
-        `select * from Empresa where emp_email = ${email}`,
+        `select * from Empresa where emp_email = '${email}'`,
         function(err, result, fields) {
             if(err) {
-                return err;
+                console.log(err);
+                return true;
             }
 
             if(result.length <= 0) {
-                return false;
+                callback(false);
             }
+            callback(true);
         }
     );
     EndConnection(dbConn);
@@ -26,37 +28,42 @@ function ChecarEmailCadastrado(email) {
 router.post(
     '/cadastro',
     function(req, res) {
-        if(ChecarEmailCadastrado(email)){
-            res.status(500).send(`O email '${email}' já está cadastrado.`);
-            return;
-        }
-
-        HashText(
-            req.body.senha,
-            function(err, hash) {
-                if(err) {
-                    res.status(500).send(err);
+        const email = req.body.email;
+        ChecarEmailCadastrado(
+            email,
+            function(ret) {
+                if(ret) {
+                    res.status(500).send(`O email ${email} já está cadastrado.`);
                     return;
                 }
 
-                const nome = req.body.nome;
-                const cnpj = req.body.cnpj;
-                const email = req.body.email;
-
-                const dbConn = CreateConnection();
-                dbConn.query(
-                    `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values('${nome}', '${cnpj}', '${hash}', '${email}')`,
-                    function(err, result, fields) {
+                HashText(
+                    req.body.senha,
+                    function(err, hash) {
                         if(err) {
                             res.status(500).send(err);
                             return;
                         }
-                        res.status(200).send(result);
+        
+                        const nome = req.body.nome;
+                        const cnpj = req.body.cnpj;
+        
+                        const dbConn = CreateConnection();
+                        dbConn.query(
+                            `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values('${nome}', '${cnpj}', '${hash}', '${email}')`,
+                            function(err, result, fields) {
+                                if(err) {
+                                    res.status(500).send(err);
+                                    return;
+                                }
+                                res.status(200).send(result);
+                            }
+                        );
+                        EndConnection(dbConn);
                     }
-                )
-                EndConnection(dbConn);
+                );
             }
-        )
+        );
     }
 );
 
@@ -64,7 +71,6 @@ router.post(
     '/login',
     function(req, res) {
         const email = req.body.email;
-        const senha = req.body.senha;
 
         const dbConn = CreateConnection();
         dbConn.query(
@@ -80,10 +86,11 @@ router.post(
                     return;
                 }
 
+                const senha = req.body.senha;
                 TextHashCompare(
                     senha,
                     result[0].emp_senha,
-                    function(err, equal){
+                    function(err, equal) {
                         if(err) {
                             res.status(500).send(err);
                             return;
