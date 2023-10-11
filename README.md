@@ -103,10 +103,10 @@ Recebe os os parâmetros `Email` e `Senha`.
 * `Senha`: Um campo de texto com a senha não criptografada.
 
 ### Retornos
-* `200` - Login feito com sucesso. Um `json` como o abaixo será retornado.
+* `200` - Login feito com sucesso.
 ```
 {
-    msg: "Sucesso",,
+    msg: "Sucesso",
     nome: "Funcionário Tal",
     email: "funcemail@gmail.com",
     celular: "(12) 98899-5893",
