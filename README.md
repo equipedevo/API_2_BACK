@@ -29,6 +29,12 @@ Recebe os os parâmetros `razaoSocial`, `cnpj`, `email` e `senha`.
     msg: "Sucesso"
 }
 ```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
 * `500` - Erro.
 ```
 {
@@ -53,6 +59,12 @@ Recebe os os parâmetros `email` e `senha`.
     nome: "Empresa abc",
     cnpj: "12.345.678/0002-00",
     email: "empresa.abc@gmail.com"
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
 }
 ```
 * `500` - Erro.
@@ -86,6 +98,12 @@ Recebe os os parâmetros `nome`, `funcao`, `email`, `celular`, `senha`, `cargo` 
     msg: "Sucesso"
 }
 ```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
 * `500` - Erro.
 ```
 {
@@ -112,6 +130,12 @@ Recebe os os parâmetros `Email` e `Senha`.
     celular: "(12) 98899-5893",
     cargo: 1,
     emp_cod: 3
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
 }
 ```
 * `500` - Erro.

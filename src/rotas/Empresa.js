@@ -21,7 +21,7 @@ router.post(
                 }
     
                 if(result.length > 0) {
-                    res.status(200).json({ msg: `O email ${email} já está cadastrado.` });
+                    res.status(400).json({ msg: `O email ${email} já está cadastrado.` });
                     return;
                 }
 
@@ -70,7 +70,7 @@ router.post(
                 }
 
                 if(result.length <= 0) {
-                    res.status(200).json({ msg: `Não existe uma empresa com o e-mail "${email}" no Banco de Dados.` });
+                    res.status(400).json({ msg: `Não existe uma empresa com o e-mail "${email}" no Banco de Dados.` });
                     return;
                 }
 
@@ -85,7 +85,7 @@ router.post(
                         }
 
                         if(!equal) {
-                            res.status(200).json({ msg: "Senha incorreta." });
+                            res.status(400).json({ msg: "Senha incorreta." });
                             return;
                         }
 
