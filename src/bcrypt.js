@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 function HashText(text, callback) {
     bcrypt.genSalt(
