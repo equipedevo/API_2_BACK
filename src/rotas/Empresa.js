@@ -16,7 +16,7 @@ router.post(
             `select * from Empresa where emp_email = "${email}"`,
             function(err, result, fields) {
                 if(err) {
-                    ret.status(500).json({ msg: err });
+                    res.status(500).json({ msg: err });
                     return;
                 }
     
