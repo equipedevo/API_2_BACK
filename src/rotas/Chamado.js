@@ -25,5 +25,26 @@ router.get(
     }
 );
 
+router.post(
+    '/cadastro',
+    function (req, res) {
+        const 
+        const dbConn = CreateConnection();
+        dbConn.query(
+            `select * from Chamado`,
+            function (err, rows, fields) {
+                if (err) {
+                    res.status(500).send(err);
+                    return;
+                }
+
+                res.status(200).send(rows);
+            }
+        );
+
+        EndConnection(dbConn);
+    }
+);
+
 
 module.exports = router;
