@@ -11,7 +11,7 @@ router.post(
     function(req, res) {
         const email = req.body.email;
 
-        let dbConn = CreateConnection(req.query("dev"));
+        let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
             `select * from Empresa where emp_email = "${email}"`,
             function(err, result, fields) {
@@ -32,25 +32,25 @@ router.post(
                             return;
                         }
         
-                        const nome = req.body.nome;
+                        const razaoSocial = req.body.razaoSocial;
                         const cnpj = req.body.cnpj;
                         
-                        dbConn = CreateConnection();
+                        dbConn = CreateConnection(req.query.dev);
                         dbConn.query(
-                            `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values("${nome}", "${cnpj}", "${hash}", "${email}")`,
+                            `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values("${razaoSocial}", "${cnpj}", "${hash}", "${email}")`,
                             function(err, result, fields) {
                                 if(err) {
                                     res.status(500).json({ msg: err });
                                     return;
                                 }
-                                res.status(200).json({ msg: `Empresa ${nome} cadastrada com sucesso.` });
+                                res.status(200).json({ msg: `Empresa ${razaoSocial} cadastrada com sucesso.` });
+                                EndConnection(dbConn);
                             }
                         );
                     }
                 );
             }
         );
-        EndConnection(dbConn);
     }
 );
 
@@ -59,7 +59,7 @@ router.post(
     function(req, res) {
         const email = req.body.email;
 
-        const dbConn = CreateConnection();
+        const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
             `select * from Empresa where emp_email = "${email}"`,
             function(err, result, fields) {
@@ -93,11 +93,11 @@ router.post(
                             cnpj: result[0].emp_cnpj,
                             email: result[0].emp_email
                         });
+                        EndConnection(dbConn);
                     }
                 );
             }
-        )
-        EndConnection(dbConn);
+        );
     }
 );
 
