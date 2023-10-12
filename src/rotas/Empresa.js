@@ -21,9 +21,10 @@ router.post(
                 }
     
                 if(result.length > 0) {
-                    res.status(200).json({ msg: `O email ${email} já está cadastrado.` });
+                    res.status(400).json({ msg: `Já há uma empresa cadastrada com o e-mail '${email}'.` });
                     return;
                 }
+
                 HashText(
                     req.body.senha,
                     function(err, hash) {
@@ -43,7 +44,7 @@ router.post(
                                     res.status(500).json({ msg: err });
                                     return;
                                 }
-                                res.status(200).json({ msg: `Empresa ${razaoSocial} cadastrada com sucesso.` });
+                                res.status(200).json({ msg: `Empresa '${razaoSocial}' cadastrada com sucesso.` });
                                 EndConnection(dbConn);
                             }
                         );
@@ -69,7 +70,7 @@ router.post(
                 }
 
                 if(result.length <= 0) {
-                    res.status(500).json({ msg: `Não existe uma empresa com o e-mail "${email}" no Banco de Dados.` });
+                    res.status(400).json({ msg: `Não existe uma empresa cadastrada com o e-mail '${email}'.` });
                     return;
                 }
 
@@ -84,11 +85,13 @@ router.post(
                         }
 
                         if(!equal) {
-                            res.status(500).json({ msg: "Senha incorreta." });
+                            res.status(400).json({ msg: "Senha incorreta." });
                             return;
                         }
 
                         res.status(200).json({
+                            msg: "Login feito com sucesso",
+                            emp_cod: result[0].emp_cod,
                             nome: result[0].emp_nome,
                             cnpj: result[0].emp_cnpj,
                             email: result[0].emp_email

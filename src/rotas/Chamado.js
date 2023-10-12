@@ -8,7 +8,7 @@ const { CreateConnection, EndConnection } = require('../connection');
 router.get(
     '/getTodos',
     function (req, res) {
-        const dbConn = CreateConnection();
+        const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
             `select * from Chamado`,
             function (err, rows, fields) {
