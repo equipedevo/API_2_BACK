@@ -30,7 +30,6 @@ router.post(
     '/cadastro',
     function (req, res) {
         const desc = req.body.desc
-        const dataInicio = "2004-11-23 08:24:89"
         const local = req.body.local
         const titulo = req.body.titulo
         const codFun = req.body.codFun
@@ -39,8 +38,8 @@ router.post(
         const dbConn = CreateConnection();
         dbConn.query(
             `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) 
-            values ('${desc}', '${dataInicio}', '${local}', '${titulo}','${codFun}', 1, 2, 1, '${codEmp}')`,
-            function (err, rows, fields) {
+            values ('${desc}', NOW(), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
+            function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
                     return;
