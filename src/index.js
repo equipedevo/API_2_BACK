@@ -14,11 +14,10 @@ const app = express();
 app.use(require("body-parser").urlencoded({ extended: false }));
 app.use(
     cors({
-        origin: "*",
-        // origin: [
-        //     "https://hermezapi.vercel.app/",
-        //     "http://localhost:3000/"
-        // ],
+        origin: [
+            "https://hermezapi.vercel.app/",
+            "http://localhost:3000/"
+        ],
         method: [ "GET", "POST" ]
     })
 );
