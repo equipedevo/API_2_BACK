@@ -8,8 +8,7 @@
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
 * [Chamado](#chamado)
-    * [Chamado](#chamado)
-    * [Chamado](#chamado)
+    * [Chamado](#chamado.cadastro)
 
 <br>
 
@@ -139,6 +138,33 @@ Recebe os os parâmetros `Email` e `Senha`.
 ```
 {
     msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+# Chamado <span id="chamado"></span>
+## Cadastro <span id="chamado.cadastro"></span>
+### POST - *hermezapi-back.vercel.app/*`chamado/cadastro`
+Recebe os os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`.
+* `desc`: Um campo de texto com uma descrição do problema que o chamado referência.
+* `local`: Um campo de texto com uma descrição do local onde o problema referenciado está.
+* `titulo`: Um campo de texto que contém um breve título do chamado.
+* `codFun`: Um campo de número que vai conter o código do funcíonario responsável pelo chamado.
+* `codEmp`: Um campo de número com o código da empresa resposável pelo chamado.
+
+### Retornos
+* `200` - Cadastro feito com sucesso.
+```
+{
+    msg: "Chamada iniciado com sucesso"
 }
 ```
 * `500` - Erro.

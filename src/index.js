@@ -19,21 +19,21 @@ app.use(
         //     "https://hermezapi.vercel.app/",
         //     "http://localhost:3000/"
         // ],
-        method: [ "GET", "POST" ]
+        method: ["GET", "POST"]
     })
 );
 app.use(express.json());
 
 app.listen(
     PORT,
-    function() {
+    function () {
         console.log(`API Hermez aberta na porta ${PORT}`);
     }
 );
 
 app.get(
     "/",
-    function(req, res) {
+    function (req, res) {
         res.send("API Hermez");
     }
 );
