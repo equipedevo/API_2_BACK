@@ -35,7 +35,7 @@ router.post(
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
 
-        const dbConn = CreateConnection();
+        const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
             `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', NOW(), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
             function (err, result, fields) {
