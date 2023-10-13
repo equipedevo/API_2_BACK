@@ -17,11 +17,11 @@ router.get(
                     return;
                 }
 
-                res.status(200).json({result});
+                res.status(200).json({ result });
+                EndConnection(dbConn);
             }
         );
 
-        EndConnection(dbConn);
     }
 );
 
@@ -49,8 +49,6 @@ router.post(
                 EndConnection(dbConn);
             }
         );
-
-        EndConnection(dbConn);
     }
 );
 
