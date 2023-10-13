@@ -8,8 +8,8 @@
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
 * [Chamado](#chamado)
-    * [Chamado](#chamado.cadastro)
-    * [Chamado](#chamado.listar)
+    * [Cadastro](#chamado.cadastro)
+    * [Listar](#chamado.listar)
 
 <br>
 
