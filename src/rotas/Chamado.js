@@ -37,8 +37,7 @@ router.post(
 
         const dbConn = CreateConnection();
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) 
-            values ('${desc}', NOW(), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
+            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', NOW(), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
