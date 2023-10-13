@@ -185,21 +185,24 @@ Recebe nenhum parametro
 ### Retornos
 * `200` - Cadastro feito com sucesso.
 ```
-{
-    {"result":[{"cha_cod":1,
-    "cha_desc":"Problema do chamado",
-    "cha_dataInicio":"2001-09-11T03:55:59.000Z",
-    "cha_dataFim":"2002-10-21T03:55:59.000Z",
-    "cha_local":"Local do problema",
-    "cha_titulo":"Título do problema",
-    "fun_cod":"1",
-    "sta_cod":"1",
-    "tec_cod":"1",
-    "cha_prioridade":"2",
-    "ser_cod":"6",
-    "emp_cod":"1"},
-    ...]}
-}
+        [
+            {
+                "cha_cod":1,
+                "cha_desc":"Problema do chamado",
+                "cha_dataInicio":"2001-09-11T03:55:59.000Z",
+                "cha_dataFim":"2002-10-21T03:55:59.000Z",
+                "cha_local":"Local do problema",
+                "cha_titulo":"Título do problema",
+                "fun_cod":"1",
+                "sta_cod":"1",
+                "tec_cod":"1",
+                "cha_prioridade":"2",
+                "ser_cod":"6",
+                "emp_cod":"1"
+                },
+                ...
+        ]
+
 ```
 * `500` - Erro.
 ```
