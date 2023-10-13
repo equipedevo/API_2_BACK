@@ -11,13 +11,13 @@ router.get(
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
             `select * from Chamado`,
-            function (err, rows, fields) {
+            function (err, result, fields) {
                 if (err) {
-                    res.status(500).send(err);
+                    res.status(500).json({ msg: err });
                     return;
                 }
 
-                res.status(200).send(rows);
+                res.status(200).json({result});
             }
         );
 
