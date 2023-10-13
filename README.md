@@ -199,7 +199,7 @@ Recebe nenhum parametro
                 "cha_prioridade":"2",
                 "ser_cod":"6",
                 "emp_cod":"1"
-                },
+            },
                 ...
         ]
 
