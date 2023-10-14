@@ -100,11 +100,11 @@ router.post(
                             car_cod: result[0].car_cod,
                             emp_cod: result[0].emp_cod
                         });
+                        EndConnection(dbConn);
                     }
                 );
             }
-        )
-        EndConnection(dbConn);
+        );
     }
 );
 

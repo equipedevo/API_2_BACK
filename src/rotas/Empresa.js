@@ -36,7 +36,6 @@ router.post(
                         const razaoSocial = req.body.razaoSocial;
                         const cnpj = req.body.cnpj;
                         
-                        dbConn = CreateConnection(req.query.dev);
                         dbConn.query(
                             `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values("${razaoSocial}", "${cnpj}", "${hash}", "${email}")`,
                             function(err, result, fields) {

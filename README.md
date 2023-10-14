@@ -90,7 +90,7 @@ Recebe os os parâmetros `nome`, `funcao`, `email`, `celular`, `senha`, `car_cod
 * `senha`: Um campo de texto com a senha não criptografada.
 * `car_cod`: Um campo de número com o id do cargo daquele funcionário (Funcionário padrão: 1, Técnico: 2, Admin: 3).
 * `emp_cod`: Código da empresa que está cadastrando o usuário (Não será um campo para o usuário colocar qualquer código, será enviado para o back o código da empresa que está logada realizando o cadastro).
-* `função`: Um campo de texto com uma descrição da função que o funcionário exerce.
+* `funcao`: Um campo de texto com uma descrição da função que o funcionário exerce.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
