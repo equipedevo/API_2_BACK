@@ -20,7 +20,7 @@ router.post(
                     return;
                 }
 
-                if(result.length <= 0) {
+                if(result.length > 0) {
                     res.status(400).json({ msg: `Já há um funcionário cadastrado com o e-mail '${email}'.` });
                     return;
                 }
@@ -64,7 +64,7 @@ router.post(
         
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `SELECT * FROM Funcionario WHERE fun_email = '${email}'`,
+            `select * from Funcionario where fun_email = '${email}'`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
