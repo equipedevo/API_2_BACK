@@ -193,12 +193,11 @@ Recebe nenhum parametro
                 "cha_dataFim":"2002-10-21T03:55:59.000Z",
                 "cha_local":"Local do problema",
                 "cha_titulo":"Título do problema",
-                "fun_cod":"1",
-                "sta_cod":"1",
-                "tec_cod":"1",
                 "cha_prioridade":"2",
-                "ser_cod":"6",
-                "emp_cod":"1"
+                "fun_nome":"Funcionario tal",
+                "sta_nome":"Status tal",
+                "tecnico":"Tecnico tal",
+                "ser_nome":"Serviço tal"
             },
                 ...
         ]
