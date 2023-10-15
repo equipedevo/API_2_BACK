@@ -197,7 +197,8 @@ Recebe nenhum parametro
                 "fun_nome":"Funcionario tal",
                 "sta_nome":"Status tal",
                 "tecnico":"Tecnico tal",
-                "ser_nome":"Serviço tal"
+                "ser_nome":"Serviço tal",
+                "emp_nome":"Empresa tal"
             },
                 ...
         ]
