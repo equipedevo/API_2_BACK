@@ -10,7 +10,7 @@ router.get(
     function (req, res) {
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select * from Chamado`,
+            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, fu.fun_nome tecnico, se.ser_nome, emp_nome e from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario fu on c.tec_cod = fu.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod;`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
