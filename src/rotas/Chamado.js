@@ -18,6 +18,11 @@ router.post(
                     return;
                 }
 
+                if(result.length <= 0) {
+                    res.status(400).json({ msg: `Essa empresa ainda não possui chamados` });
+                    return;
+                }
+
                 res.status(200).json(result);
                 EndConnection(dbConn);
             }
