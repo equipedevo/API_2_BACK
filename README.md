@@ -179,8 +179,9 @@ Recebe os os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`.
 [Voltar ao topo](#sumário)
 
 ## Listar <span id="chamado.listar"></span>
-### GET - *hermezapi-back.vercel.app/*`chamado/getTodos`
-Recebe nenhum parametro
+### POST - *hermezapi-back.vercel.app/*`chamado/getTodos`
+Recebe o parâmetro `codEmp`.
+* `codEmp`: Um campo de número com o código da empresa.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
@@ -197,13 +198,19 @@ Recebe nenhum parametro
                 "fun_nome":"Funcionario tal",
                 "sta_nome":"Status tal",
                 "tecnico":"Tecnico tal",
-                "ser_nome":"Serviço tal",
-                "emp_nome":"Empresa tal"
+                "ser_nome":"Serviço tal"
             },
                 ...
         ]
 
 ```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+
 * `500` - Erro.
 ```
 {
