@@ -108,4 +108,60 @@ router.post(
     }
 );
 
+router.post(
+    '/deletar',
+    function(req, res){
+        const fun_cod = req.body.fun_cod;
+
+        const dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            `delete from Funcionario where fun_cod = ${fun_cod}`,
+            function(err, result, fields){
+                if(err){
+                    res.status(500).json({ msg: err });
+                    return;
+                }
+                res.status(200).json({ msg: "Usuário deletado com sucesso" });
+            }
+        );
+        EndConnection(dbConn);
+    }
+)
+
+router.post(
+    '/atualizar',
+    function(req, res){
+        const fun_cod = req.body.fun_cod;
+        const nome = req.body.nome;
+        const email = req.body.email;
+        const celular = req.body.celular;
+        const funcao = req.body.funcao;
+        const cargo = req.body.car_cod;
+
+        const dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            `update Funcionario set fun_nome = '${nome}', fun_funcao = '${funcao}', fun_email = '${email}', fun_celular = '${celular}', car_cod = ${cargo} where fun_cod = ${fun_cod}`,
+            function(err, result, fields){
+                if(err){
+                    res.status(500).json({ msg: err });
+                    return;
+                }
+                if(result.length <= 0){
+                    res.status(400).json({ msg: "Não foi possível atualizar dados do funcionário devido algum erro de preenchimento"});
+                    return;
+                }
+                res.status(200).json({
+                    msg: "Dados do funcionário atualizados com sucesso!",
+                    nome: result[0].fun_nome,
+                    email: result[0].fun_email,
+                    funcao: result[0].fun_funcao,
+                    celular: result[0].fun_celular,
+                    car_cod: result[0].car_cod,
+                    emp_cod: result[0].emp_cod
+                });
+            }
+        );
+        EndConnection(dbConn);
+    }
+)
 module.exports = router;
