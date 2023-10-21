@@ -6,6 +6,33 @@ const router = express.Router();
 const { CreateConnection, EndConnection } = require("../connection");
 
 router.post(
+    "/novaMensagen",
+    function(req, res) {
+        const msg_texto = req.post.msg_texto;
+        const fun_cod = req.post.fun_cod;
+        const ct_cod = req.post.ct_cod;
+        const arq_cod = (req.post.arq_cod || null);
+        const dataEnvio = req.post.dataEnvio;
+
+        let dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            `insert into Mensagem(msg_texto, fun_cod, ct_cod, arq_cod, msg_data_envio)
+                values('${msg_texto}', ${fun_cod}, ${ct_cod}, ${arq_cod}, '${dataEnvio}');`,
+            function(err, result, fields) {
+                if(err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+                
+                res.status(200).json({ msg: `Mensagem incluida no chamado ${ct_cod}.` });
+                EndConnection(dbConn);
+            }
+        );
+    }
+);
+
+router.post(
     "/mensagens",
     function(req, res) {
         const cha_cod = req.body.cha_cod;
@@ -25,7 +52,7 @@ router.post(
                 }
     
                 if(result.length > 0) {
-                    res.status(400).json({ msg: `Nenhuma mensagem encontrada para esse chamado na página '${pag}'.` });
+                    res.status(400).json({ msg: `Nenhuma mensagem encontrada para esse chamado com o parâmetro pag='${pag}'.` });
                     EndConnection(dbConn);
                     return;
                 }
@@ -40,7 +67,7 @@ router.post(
                     })
                 });
                 res.status(200).json({
-                    msg: `Mensagens (${20 * pag}:${20 * pag + 20}) do chamado ${cha_cod}`,
+                    msg: `Mensagens [${20 * pag}:${20 * pag + 20}] do chamado ${cha_cod}`,
                     mensagens: mensagens
                 });
                 EndConnection(dbConn);
