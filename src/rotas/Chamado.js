@@ -34,7 +34,6 @@ router.post(
     }
 );
 
-
 router.post(
     '/cadastro',
     function (req, res) {
