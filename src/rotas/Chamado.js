@@ -15,11 +15,13 @@ router.post(
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
                     return;
                 }
 
                 if(result.length <= 0) {
                     res.status(400).json({ msg: `Essa empresa ainda não possui chamados` });
+                    EndConnection(dbConn);
                     return;
                 }
 
@@ -47,6 +49,7 @@ router.post(
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
                     return;
                 }
 

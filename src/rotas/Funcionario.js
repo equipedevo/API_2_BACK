@@ -17,11 +17,13 @@ router.post(
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
                     return;
                 }
 
                 if(result.length > 0) {
                     res.status(400).json({ msg: `Já há um funcionário cadastrado com o e-mail '${email}'.` });
+                    EndConnection(dbConn);
                     return;
                 }
                 
@@ -30,6 +32,7 @@ router.post(
                     function(err, hash) {
                         if(err) {
                             res.status(500).json({ msg: err });
+                            EndConnection(dbConn);
                             return;
                         }
         
@@ -44,6 +47,7 @@ router.post(
                             function(err, result, fields) {
                                 if(err) {
                                     res.status(500).json({ msg: err });
+                                    EndConnection(dbConn);
                                     return;
                                 }
                                 res.status(200).json({ msg: `Funcionário '${nome}' cadastrado com sucesso.` });
@@ -68,11 +72,13 @@ router.post(
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
                     return;
                 }
 
                 if(result.length <= 0) {
                     res.status(400).json({ msg: `Não existe um funcionário cadastrado com o e-mail '${email}'.` });
+                    EndConnection(dbConn);
                     return;
                 }
 
@@ -82,11 +88,13 @@ router.post(
                     function(err, equal) {
                         if(err) {
                             res.status(500).json({ msg: err });
+                            EndConnection(dbConn);
                             return;
                         }
 
                         if(!equal) {
                             res.status(400).json({ msg: 'Senha incorreta.' });
+                            EndConnection(dbConn);
                             return;
                         }
 
