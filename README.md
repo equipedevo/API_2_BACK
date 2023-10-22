@@ -4,6 +4,7 @@
 * [Empresa](#empresa)
     * [Cadastro](#empresa.cadastro)
     * [Login](#empresa.login)
+    * [Listar Funcionarios](#empresa.listar.funcionarios)
 * [Funcionario](#funcionario)
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
@@ -81,7 +82,44 @@ Recebe os parâmetros `email` e `senha`.
 
 [Voltar ao topo](#sumário)
 
-<br>
+## Listar Funcionarios <span id="empresa.listar.funcionarios"></span>
+### POST - *hermezapi-back.vercel.app/*`empresa/listar/funcionarios`
+Recebe o parâmetro `emp_cod`.
+* `emp_cod`: O código da empresa.
+
+### Retornos
+* `200` - Sucesso.
+```
+{
+    msg: "Sucesso",
+    funcionarios: [
+        {
+            fun_nome: "Nome do Funcionário",
+            fun_funcao: "função",
+            fun_email: "email@gmail.com",
+            fun_celular: "(12) 99999-9999",
+            car_cod: 3,
+            fun_dataNasc: "dd/mm/aaaa"
+        },
+        ...
+    ]
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
 
 # Funcionario <span id="funcionario"></span>
 ## Cadastro <span id="funcionario.cadastro"></span>

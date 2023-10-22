@@ -111,4 +111,46 @@ router.post(
     }
 );
 
+router.post(
+    "/listar/funcionarios",
+    function(req, res) {
+        const emp_cod = req.body.emp_cod;
+        
+        const dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            `select fun_nome, fun_funcao, fun_email, fun_celular, car_cod, fun_dataNasc from Funcionario where emp_cod = '${emp_cod}'`,
+            function(err, result, fields) {
+                if(err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                if(result.length <= 0) {
+                    res.status(400).json({ msg: `Não há funcionários cadastrados na empresa ${emp_cod}.` });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                let funcionarios = [];
+                result.forEach(funcionario => {
+                    funcionarios.push({
+                        fun_nome: funcionario.fun_nome,
+                        fun_funcao: funcionario.fun_funcao,
+                        fun_email: funcionario.fun_email,
+                        fun_celular: funcionario.fun_celular,
+                        car_cod: funcionario.car_cod,
+                        fun_dataNasc: funcionario.fun_dataNasc
+                    })
+                });
+                res.status(200).json({
+                    msg: `Funcionários da empresa ${emp_cod}.`,
+                    funcionarios: funcionarios
+                });
+                EndConnection(dbConn);
+            }
+        );
+    }
+);
+
 module.exports = router;
