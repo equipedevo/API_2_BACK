@@ -24,7 +24,7 @@ router.post(
                     return;
                 }
 
-                if(result.length <= 0) {
+                if (result.length <= 0) {
                     res.status(400).json({ msg: `Essa empresa ainda não possui chamados` });
                     EndConnection(dbConn);
                     return;
@@ -52,7 +52,7 @@ router.post(
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', NOW(), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
+            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', convert_tz(now(),'+00:00','-03:00'), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -87,7 +87,7 @@ router.post(
                     return;
                 }
 
-                if(result.length <= 0) {
+                if (result.length <= 0) {
                     res.status(400).json({ msg: `Esse chamado não existe, não pertence a empresa ou o funcionário não possui permissão de vê-lo.` });
                     EndConnection(dbConn);
                     return;
