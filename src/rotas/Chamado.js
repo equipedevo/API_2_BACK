@@ -5,14 +5,18 @@ const router = express.Router();
 
 const { CreateConnection, EndConnection } = require('../connection');
 
-// ARRUMA ESSA QUERY DEMONIACA @CAIQUE @PASTELDEPAODECOXINHA //
+// ARRUMA ESSA QUERY DEMONIACA @CAIQUE @PASTELDEPAODECOXINHA // ARRUMADO RAFAEL NIHIL
+
+//
+// ROTA PARA PEGAR TODOS OS CHAMADOS DE UMA EMPRESA
+//
 router.post(
     '/getTodos',
     function (req, res) {
         const codEmp = req.body.codEmp
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, fu.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario fu on c.tec_cod = fu.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where e.emp_cod = ${codEmp};`,
+            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where e.emp_cod = ${codEmp};`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -34,6 +38,9 @@ router.post(
     }
 );
 
+//
+// ROTA PARA CADASTRAR UM CHAMADO
+//
 router.post(
     '/cadastro',
     function (req, res) {
@@ -60,6 +67,9 @@ router.post(
     }
 );
 
+//
+//ROTA PARA PEGAR UM CHAMADO EM ESPECÍFICO
+//
 router.post(
     "/pegar",
     function (req, res) {
@@ -69,7 +79,7 @@ router.post(
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, fu.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario fu on c.tec_cod = fu.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where e.emp_cod = ${emp_cod} and c.cha_cod = ${cha_cod} and (fu.fun_cod = ${fun_cod} or c.tec_cod = ${fun_cod});`,
+            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where e.emp_cod = ${emp_cod} and c.cha_cod = ${cha_cod} and (tec.fun_cod = ${fun_cod} or c.tec_cod = ${fun_cod});`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
