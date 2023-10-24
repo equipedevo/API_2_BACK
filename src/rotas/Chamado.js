@@ -130,4 +130,34 @@ router.post(
     }
 );
 
+//
+//ROTA PARA PEGAR OS CHAMADOS DE UM FUNCIONARIO
+//
+router.post(
+    '/getMeus',
+    function (req, res) {
+        const dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            ``,
+            function (err, result, fields) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                if (result.length <= 0) {
+                    res.status(400).json({ msg: `erro` });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(200).json(result);
+                EndConnection(dbConn);
+            }
+        );
+
+    }
+);
+
 module.exports = router;
