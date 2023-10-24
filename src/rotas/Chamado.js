@@ -71,7 +71,7 @@ router.post(
 //ROTA PARA PEGAR UM CHAMADO EM ESPECÍFICO
 //
 router.post(
-    "/pegar",
+    "/pegarUmChamado",
     function (req, res) {
         const emp_cod = req.body.emp_cod;
         const fun_cod = req.body.fun_cod;

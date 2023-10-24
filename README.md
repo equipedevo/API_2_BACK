@@ -263,7 +263,7 @@ Recebe o parâmetro `codEmp`.
 [Voltar ao topo](#sumário)
 
 ## Pegar <span id="chamado.pegar"></span>
-### POST - *hermezapi-back.vercel.app/*`chamado/pegar`
+### POST - *hermezapi-back.vercel.app/*`chamado/pegarUmChamado`
 Recebe o parâmetro `emp_cod`.
 * `emp_cod`: Um campo numérico com o código da empresa.
 * `fun_cod`: Um campo numérico com o código do funcionário.
