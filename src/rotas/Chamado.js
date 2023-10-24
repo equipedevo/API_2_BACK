@@ -116,10 +116,10 @@ router.post(
 
         //Realização das queries
         const Qprio = (priori != null) ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
-        const Qdata = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
-        const Qtit = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
-        const Qsta = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
-        const Qtip = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
+        const Qdata = (data != null) ? `c.cha_dataInicio = '${data}', ` : ""
+        const Qtit = (titulo != null) ? `c.cha_prioridade = '${titulo}', ` : ""
+        const Qsta = (status != null) ? `c.cha_prioridade = ${status}, ` : ""
+        const Qtip = (tipo != null) ? `c.cha_prioridade = ${tipo}, ` : ""
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
