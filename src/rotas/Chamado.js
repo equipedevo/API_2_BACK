@@ -136,9 +136,11 @@ router.post(
 router.post(
     '/getMeus',
     function (req, res) {
+        const emp_cod = req.body.emp_cod
+        const fun_cod = req.body.fun_cod
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            ``,
+            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where c.emp_cod = ${emp_cod} and c.fun_cod = ${fun_cod} order by cha_dataInicio DESC;`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
