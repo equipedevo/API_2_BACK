@@ -106,10 +106,24 @@ router.post(
 router.post(
     '/getComFiltro',
     function (req, res) {
+        //Requisição do campos do front
+        const emp_cod = req.body.emp_cod
+        const priori = req.body.priori
+        const data = req.body.data
+        const titulo = req.body.titulo
+        const status = req.body.status
+        const tipo = req.body.tipo
+
+        //Realização das queries
+        const Qprio = (priori != null) ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
+        const Qdata = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
+        const Qtit = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
+        const Qsta = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
+        const Qtip = (priori != null) ? `c.cha_prioridade = ${priori}, ` : ""
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where e.emp_cod = ${codEmp} Where ${Qprio}${Qdata}${Qtit}${QSta}${Qtip} order by cha_dataInicio DESC`,
+            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where ${Qprio}${Qdata}${Qtit}${Qsta}${Qtip}e.emp_cod = ${emp_cod} order by cha_dataInicio DESC`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
