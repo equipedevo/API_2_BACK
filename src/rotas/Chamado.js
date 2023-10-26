@@ -108,22 +108,24 @@ router.post(
     function (req, res) {
         //Requisição do campos do front
         const emp_cod = req.body.emp_cod
+
         const priori = req.body.priori
         const data = req.body.data
-        const titulo = req.body.titulo
+        const func = req.body.func
         const status = req.body.status
         const tipo = req.body.tipo
 
         //Realização das queries
-        const Qprio = (priori != null) ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
+        const Qprio = (priori != null) ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, 
+        //é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
         const Qdata = (data != null) ? `c.cha_dataInicio = '${data}', ` : ""
-        const Qtit = (titulo != null) ? `c.cha_prioridade = '${titulo}', ` : ""
-        const Qsta = (status != null) ? `c.cha_prioridade = ${status}, ` : ""
-        const Qtip = (tipo != null) ? `c.cha_prioridade = ${tipo}, ` : ""
+        const Qfunc = (func != null) ? `f.fun_nome = '${func}', ` : ""
+        const Qsta = (status != null) ? `s.sta_nome = ${status}, ` : ""
+        const Qtip = (tipo != null) ? `se.ser_nome = ${tipo}, ` : ""
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where ${Qprio}${Qdata}${Qtit}${Qsta}${Qtip}e.emp_cod = ${emp_cod} order by cha_dataInicio DESC`,
+            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where ${Qprio}${Qdata}${Qfunc}${Qsta}${Qtip}e.emp_cod = ${emp_cod} order by cha_dataInicio DESC`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
