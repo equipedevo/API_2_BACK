@@ -116,12 +116,12 @@ router.post(
         const tipo = req.body.tipo
 
         //Realização das queries
-        const Qprio = (priori != null) ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, 
+        const Qprio = (priori != "") ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, 
         //é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
-        const Qdata = (data != null) ? `c.cha_dataInicio = '${data}', ` : ""
-        const Qfunc = (func != null) ? `f.fun_nome = '${func}', ` : ""
-        const Qsta = (status != null) ? `s.sta_nome = ${status}, ` : ""
-        const Qtip = (tipo != null) ? `se.ser_nome = ${tipo}, ` : ""
+        const Qdata = (data != "") ? `c.cha_dataInicio = '${data}' and ` : ""
+        const Qfunc = (func != "") ? `f.fun_nome = '${func}' and ` : ""
+        const Qsta = (status != "") ? `s.sta_nome = '${status}' and ` : ""
+        const Qtip = (tipo != "") ? `se.ser_nome = ${tipo} and ` : ""
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
@@ -134,7 +134,7 @@ router.post(
                 }
 
                 if (result.length <= 0) {
-                    res.status(400).json({ msg: `erro` });
+                    res.status(400).json({ msg: `Não há nenhum chamado com esses requisitos` });
                     EndConnection(dbConn);
                     return;
                 }
