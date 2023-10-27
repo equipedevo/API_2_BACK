@@ -203,7 +203,7 @@ router.post(
                     return;
                 }
 
-                res.status(200).json(result);
+                res.status(200).json({msg: `Chamado atualizado com sucesso`});
                 EndConnection(dbConn);
             }
         );

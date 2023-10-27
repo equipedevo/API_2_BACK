@@ -14,6 +14,7 @@
     * [Listar Meus](#chamado.listar.meus)
     * [Pegar um](#chamado.pegar)
     * [Filtro](#chamado.filtro)
+    * [Atualizar status](#chamado.atualizar)
 * [Chat](#chat)
     * [Mensagens](#chat.mensagens)
 
@@ -350,7 +351,7 @@ Recebe o parâmetro `emp_cod`, `fun_cod`, `cha_cod`
 
 ## Filtro <span id="chamado.filtro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/getComFiltro`
-Recebe o parâmetro `emp_cod`, `priori`, `data`, `func`, `status`, `tipo`.
+Recebe os parâmetros: `emp_cod`, `priori`, `data`, `func`, `status`, `tipo`.
 * `emp_cod`: Um campo numérico com o código da empresa.
 * `priori`: Um campo numérico com o número da prioridade do chamado.
 * `data`: Um campo de texto com a data do chamado.
@@ -362,18 +363,51 @@ Recebe o parâmetro `emp_cod`, `priori`, `data`, `func`, `status`, `tipo`.
 ### Retornos
 * `200` - Chamado retornado com sucesso.
 ```
+    [
+            {
+                cha_cod: 1,
+                cha_desc: "Problema do chamado",
+                cha_dataInicio: "2001-09-11T03:55:59.000Z",
+                cha_dataFim: "2002-10-21T03:55:59.000Z",
+                cha_local: "Local do problema",
+                cha_titulo: "Título do problema",
+                cha_prioridade: "2",
+                fun_nome: "Funcionario tal",
+                sta_nome: "Status tal",
+                tecnico: "Tecnico tal",
+                ser_nome: "Serviço tal"
+            },
+                ...
+        ]
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Atualizar Status <span id="chamado.atualizar"></span>
+### POST - *hermezapi-back.vercel.app/*`chamado/atualizarStatus`
+Recebe os parâmetros: `sta_cod`, `cha_cod`.
+* `sta_cod`: Um campo numérico com o código do status desejado.
+* `cha_cod`: Um campo numérico com o código do chamado desejado.
+
+### Retornos
+* `200` - Chamado atualizado com sucesso.
+```
     {
-        cha_cod: 1,
-        cha_desc: "Problema do chamado",
-        cha_dataInicio: "2001-09-11T03:55:59.000Z",
-        cha_dataFim: "2002-10-21T03:55:59.000Z",
-        cha_local: "Local do problema",
-        cha_titulo: "Título do problema",
-        cha_prioridade: "2",
-        fun_nome: "Funcionario tal",
-        sta_nome: "Status tal",
-        tecnico: "Tecnico tal",
-        ser_nome: "Serviço tal"
+        msg: Chamado atualizado com sucesso
     }
 ```
 * `400` - Erro relacionado aos dados enviados.
