@@ -166,7 +166,7 @@ router.post(
                 }
 
                 if (result.length <= 0) {
-                    res.status(400).json({ msg: `erro` });
+                    res.status(400).json({ msg: `Esse chamado não existe` });
                     EndConnection(dbConn);
                     return;
                 }
@@ -179,4 +179,35 @@ router.post(
     }
 );
 
+//
+//ROTA PARA ATUALIZAR O STATUS DO CHAMADO
+//
+router.post(
+    '/atualizarStatus',
+    function (req, res) {
+        const sta_cod = req.body.sta_cod
+        const cha_cod = req.body.cha_cod
+        const dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            `Update Chamado Set sta_cod = ${sta_cod} where cha_cod = ${cha_cod};`,
+            function (err, result, fields) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                if (result.length <= 0) {
+                    res.status(400).json({ msg: `Esse chamado não existe` });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(200).json(result);
+                EndConnection(dbConn);
+            }
+        );
+
+    }
+);
 module.exports = router;
