@@ -12,12 +12,11 @@ router.post(
         const fun_cod = req.post.fun_cod;
         const ct_cod = req.post.ct_cod;
         const arq_cod = (req.post.arq_cod || null);
-        const dataEnvio = req.post.dataEnvio;
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `insert into Mensagem(msg_texto, fun_cod, ct_cod, arq_cod, msg_data_envio)
-                values('${msg_texto}', ${fun_cod}, ${ct_cod}, ${arq_cod}, '${dataEnvio}');`,
+            `insert into Mensagem(msg_texto, fun_cod, ct_cod, arq_cod, msg_dataEnv)
+                values('${msg_texto}', ${fun_cod}, ${ct_cod}, ${arq_cod}, convert_tz(now(),"+00:00","-03:00"));`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
@@ -36,14 +35,15 @@ router.post(
     "/mensagens",
     function(req, res) {
         const cha_cod = req.body.cha_cod;
-        const pag = (req.query.pag || 0);
+        const pag = (req.body.pag || 0);
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select msg.msg_texto as texto, arq.arq_caminho as url_arquivo, func.fun_nome, msg.msg_data_envio
+            `select msg.msg_texto as texto, arq.arq_caminho as url_arquivo, func.fun_nome, msg.msg_dataEnv
                 from Mensagem msg inner join Arquivo arq on msg.arq_cod = arq.arq_cod
                     inner join Funcionario func on msg.fun_cod = func.fun_cod
-                where ct_cod = ${cha_cod} limit 20 offset ${20 * pag}`,
+                where ct_cod = ${cha_cod} limit 20 offset ${20 * pag}
+                order by msg.msg_dataEnv desc`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
@@ -52,7 +52,7 @@ router.post(
                 }
     
                 if(result.length > 0) {
-                    res.status(400).json({ msg: `Nenhuma mensagem encontrada para esse chamado com o parâmetro pag='${pag}'.` });
+                    res.status(400).json({ msg: `Nenhuma mensagem encontrada para esse chamado na página ${pag}.` });
                     EndConnection(dbConn);
                     return;
                 }

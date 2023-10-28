@@ -158,7 +158,7 @@ Recebe os parâmetros `Email` e `Senha`.
 # Chamado <span id="chamado"></span>
 ## Cadastro <span id="chamado.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/cadastro`
-Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`.
+Recebe os parâmetros `desc`, `local`, `titulo`, `codFun` e `codEmp`.
 * `desc`: Um campo de texto com uma descrição do problema que o chamado referência.
 * `local`: Um campo de texto com uma descrição do local onde o problema referenciado está.
 * `titulo`: Um campo de texto que contém um breve título do chamado.
@@ -269,12 +269,11 @@ Recebe o parâmetro `emp_cod`.
 # Chat <span id="chat"></span>
 ## Nova Mensagen <span id="chat.novaMensagem"></span>
 ### POST - *hermezapi-back.vercel.app/*`chat/novaMensagem`
-Recebe os parâmetros `msg_texto`, `fun_cod`, `ct_cod`, `arq_cod`, `dataEnvio`.
+Recebe os parâmetros `msg_texto`, `fun_cod`, `ct_cod`, `arq_cod`.
 * `msg_texto`: Um campo de texto com o texto da mensagem.
 * `fun_cod`: Um campo numérico com o código do funcionário que enviou a mensagem.
 * `ct_cod`: Um campo numérico com o código do chamado a que essa mensagem pertence.
 * `arq_cod`: Um campo numérico com o código arquivo anexado a mensagem (opcional).
-* `dataEnvio`: A data de envio da mensagem.
 
 ### Retornos
 * `200` - Mensagens retornadas com sucesso.
@@ -301,7 +300,7 @@ Recebe os parâmetros `msg_texto`, `fun_cod`, `ct_cod`, `arq_cod`, `dataEnvio`.
 
 ## Mensagens <span id="chat.mensagens"></span>
 ### POST - *hermezapi-back.vercel.app/*`chat/mensagens`
-Recebe os parâmetros `cha_cod`, `pag`.
+Recebe os parâmetros `cha_cod` e `pag`.
 * `cha_cod`: Um campo numérico com o código do chamado.
 * `pag`: Um número de "páginação" para as mensagens.
 
