@@ -8,6 +8,7 @@
 * [Funcionario](#funcionario)
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
+    * [Trocar Senha](#funcionario.trocarSenha)
 * [Chamado](#chamado)
     * [Cadastro](#chamado.cadastro)
     * [Listar Todos](#chamado.listar.todos)
@@ -161,9 +162,9 @@ Recebe os parâmetros `nome`, `funcao`, `email`, `celular`, `senha`, `car_cod` e
 
 ## Login <span id="funcionario.login"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/login`
-Recebe os parâmetros `Email` e `Senha`.
-* `Email`: Um campo de texto com o e-mail do funcionário.
-* `Senha`: Um campo de texto com a senha não criptografada.
+Recebe os parâmetros `email` e `senha`.
+* `email`: Um campo de texto com o e-mail do funcionário.
+* `senha`: Um campo de texto com a senha não criptografada.
 
 ### Retornos
 * `200` - Login feito com sucesso.
@@ -177,6 +178,36 @@ Recebe os parâmetros `Email` e `Senha`.
     funcao: "TI",
     car_cod: 1,
     emp_cod: 3
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Login <span id="funcionario.trocarSenha"></span>
+### POST - *hermezapi-back.vercel.app/*`funcionario/trocarSenha`
+Recebe os parâmetros `email`, `senha` e `novaSenha`.
+* `email`: Um campo de texto com o e-mail do funcionário.
+* `senha`: Um campo de texto com a senha não criptografada.
+* `novaSenha`: Um campo de texto com a nova senha não criptografada.
+
+### Retornos
+* `200` - Senha alterada com sucesso.
+```
+{
+    msg: "Sucesso"
 }
 ```
 * `400` - Erro relacionado aos dados enviados.

@@ -5,8 +5,6 @@ const router = express.Router();
 
 const { CreateConnection, EndConnection } = require('../connection');
 
-// ARRUMA ESSA QUERY DEMONIACA @CAIQUE @PASTELDEPAODECOXINHA // ARRUMADO RAFAEL NIHIL
-
 //
 // ROTA PARA PEGAR TODOS OS CHAMADOS DE UMA EMPRESA
 //
