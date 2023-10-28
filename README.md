@@ -9,6 +9,7 @@
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
     * [Trocar Senha](#funcionario.trocarSenha)
+    * [Pegar](#funcionario.pegar)
 * [Chamado](#chamado)
     * [Cadastro](#chamado.cadastro)
     * [Listar Todos](#chamado.listar.todos)
@@ -208,6 +209,41 @@ Recebe os parâmetros `email`, `senha` e `novaSenha`.
 ```
 {
     msg: "Sucesso"
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+
+
+## Login <span id="funcionario.pegar"></span>
+### POST - *hermezapi-back.vercel.app/*`funcionario/pegar`
+Recebe os parâmetros `fun_cod` e `emp_cod`.
+* `fun_cod`: O código do funcionário.
+* `emp_cod`: O código da empresa a que o funcionário pertence.
+
+### Retornos
+* `200` - Valores retornados.
+```
+{
+    msg: "Sucesso",
+    fun_nome: "Nome do Funcionário",
+    fun_funcao: "Função",
+    fun_email: "email",
+    fun_celular: "(12) 99999-9999"
 }
 ```
 * `400` - Erro relacionado aos dados enviados.

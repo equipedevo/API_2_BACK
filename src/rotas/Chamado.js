@@ -1,15 +1,15 @@
 "use strict"
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const { CreateConnection, EndConnection } = require('../connection');
+const { CreateConnection, EndConnection } = require("../connection");
 
 //
 // ROTA PARA PEGAR TODOS OS CHAMADOS DE UMA EMPRESA
 //
 router.post(
-    '/getTodos',
+    "/getTodos",
     function (req, res) {
         const codEmp = req.body.codEmp
         const dbConn = CreateConnection(req.query.dev);
@@ -40,7 +40,7 @@ router.post(
 // ROTA PARA CADASTRAR UM CHAMADO
 //
 router.post(
-    '/cadastro',
+    "/cadastro",
     function (req, res) {
         const desc = req.body.desc
         const local = req.body.local
@@ -50,7 +50,7 @@ router.post(
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', convert_tz(now(),'+00:00','-03:00'), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
+            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -102,7 +102,7 @@ router.post(
 //ROTA PARA PEGAR UM CHAMADO COM FILTRO
 //
 router.post(
-    '/getComFiltro',
+    "/getComFiltro",
     function (req, res) {
         //Requisição do campos do front
         const emp_cod = req.body.emp_cod
@@ -149,7 +149,7 @@ router.post(
 //ROTA PARA PEGAR OS CHAMADOS DE UM FUNCIONARIO
 //
 router.post(
-    '/getMeus',
+    "/getMeus",
     function (req, res) {
         const emp_cod = req.body.emp_cod
         const fun_cod = req.body.fun_cod
@@ -181,7 +181,7 @@ router.post(
 //ROTA PARA ATUALIZAR O STATUS DO CHAMADO
 //
 router.post(
-    '/atualizarStatus',
+    "/atualizarStatus",
     function (req, res) {
         const sta_cod = req.body.sta_cod
         const cha_cod = req.body.cha_cod

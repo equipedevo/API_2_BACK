@@ -13,7 +13,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select * from Empresa where emp_email = "${email}"`,
+            `select * from Empresa where emp_email = '${email}'`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
@@ -40,7 +40,7 @@ router.post(
                         const cnpj = req.body.cnpj;
                         
                         dbConn.query(
-                            `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values("${razaoSocial}", "${cnpj}", "${hash}", "${email}")`,
+                            `insert into Empresa(emp_nome, emp_cnpj, emp_senha, emp_email) values('${razaoSocial}', '${cnpj}', '${hash}', '${email}')`,
                             function(err, result, fields) {
                                 if(err) {
                                     res.status(500).json({ msg: err });
@@ -65,7 +65,7 @@ router.post(
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select * from Empresa where emp_email = "${email}"`,
+            `select * from Empresa where emp_email = '${email}'`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });

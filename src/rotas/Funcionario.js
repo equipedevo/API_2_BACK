@@ -191,4 +191,39 @@ router.post(
     }
 );
 
+router.post(
+    "/pegar",
+    function(req, res) {
+        const fun_cod = req.body.fun_cod;
+        const emp_cod = req.body.fun_cod;
+
+        const dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            `select fun_nome, fun_funcao, fun_email, fun_celular from Funcionario where fun_cod = ${fun_cod} and emp_cod = ${emp_cod}`,
+            function(err, result, fields) {
+                if(err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                if(result.length <= 0) {
+                    res.status(400).json({ msg: `Não existe um funcionário com o código '${fun_cod}' na empresa '${emp_cod}'.` });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(200).json({
+                    msg: `Funcionário ${fun_cod} da empresa ${emp_cod}`,
+                    nome: result[0].fun_nome,
+                    email: result[0].fun_email,
+                    funcao: result[0].fun_funcao,
+                    celular: result[0].fun_celular
+                });
+                EndConnection(dbConn);
+            }
+        );
+    }
+);
+
 module.exports = router;
