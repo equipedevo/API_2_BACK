@@ -18,6 +18,7 @@
     * [Filtro](#chamado.filtro)
     * [Atualizar status](#chamado.atualizar)
 * [Chat](#chat)
+    * [Nova Mensagem](#chat.novaMensagem)
     * [Mensagens](#chat.mensagens)
 
 <br>
@@ -265,7 +266,7 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
 # Chamado <span id="chamado"></span>
 ## Cadastro <span id="chamado.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/cadastro`
-Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`.
+Recebe os parâmetros `desc`, `local`, `titulo`, `codFun` e `codEmp`.
 * `desc`: Um campo de texto com uma descrição do problema que o chamado referência.
 * `local`: Um campo de texto com uma descrição do local onde o problema referenciado está.
 * `titulo`: Um campo de texto que contém um breve título do chamado.
@@ -495,9 +496,40 @@ Recebe os parâmetros: `sta_cod`, `cha_cod`.
 [Voltar ao topo](#sumário)
 
 # Chat <span id="chat"></span>
+## Nova Mensagen <span id="chat.novaMensagem"></span>
+### POST - *hermezapi-back.vercel.app/*`chat/novaMensagem`
+Recebe os parâmetros `msg_texto`, `fun_cod`, `ct_cod`, `arq_cod`.
+* `msg_texto`: Um campo de texto com o texto da mensagem.
+* `fun_cod`: Um campo numérico com o código do funcionário que enviou a mensagem.
+* `ct_cod`: Um campo numérico com o código do chamado a que essa mensagem pertence.
+* `arq_cod`: Um campo numérico com o código arquivo anexado a mensagem (opcional).
+
+### Retornos
+* `200` - Mensagens retornadas com sucesso.
+```
+{
+    msg: "Sucesso"
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
 ## Mensagens <span id="chat.mensagens"></span>
 ### POST - *hermezapi-back.vercel.app/*`chat/mensagens`
-Recebe os parâmetros `cha_cod`, `pag`.
+Recebe os parâmetros `cha_cod` e `pag`.
 * `cha_cod`: Um campo numérico com o código do chamado.
 * `pag`: Um número de "páginação" para as mensagens.
 
@@ -533,37 +565,4 @@ Recebe os parâmetros `cha_cod`, `pag`.
 
 [Voltar ao topo](#sumário)
 
-## Login <span id="empresa.login"></span>
-### POST - *hermezapi-back.vercel.app/*`empresa/login`
-Recebe os parâmetros `email` e `senha`.
-* `email`: Um campo de texto com o e-mail da empresa.
-* `senha`: Um campo de texto com a senha não criptografada.
 
-### Retornos
-* `200` - Login feito com sucesso.
-```
-{
-    msg: "Sucesso",
-    emp_cod: 3,
-    nome: "Empresa abc",
-    cnpj: "12.345.678/0002-00",
-    email: "empresa.abc@gmail.com"
-}
-```
-* `400` - Erro relacionado aos dados enviados.
-```
-{
-    msg: "Erro ..."
-}
-```
-* `500` - Erro.
-```
-{
-    msg: "Erro ..."
-}
-```
-<hr>
-
-[Voltar ao topo](#sumário)
-
-<br>
