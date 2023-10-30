@@ -88,7 +88,7 @@ router.post(
                     return;
                 }
 
-                res.status(200).json({ msg: `Chamada iniciado com sucesso` });
+                res.status(200).json({ msg: `Chamado iniciado com sucesso` });
                 EndConnection(dbConn);
             }
         );
