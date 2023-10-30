@@ -49,8 +49,34 @@ router.post(
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
+        const imgUrl = req.body.imgUrl
 
         const dbConn = CreateConnection(req.query.dev);
+        if (imgUrl != "") {
+            dbConn.query(
+                `Select * From Arquivo where arq_caminho = ${imgUrl}`,
+                function (err, result, fields) {
+                    if (err) {
+                        res.status(500).json({ msg: err });
+                        return;
+                    }
+
+                    if (result.length > 0) {
+                        return;
+                    } else {
+                        dbConn.query(
+                            `Insert into Arquivo(arq_caminho) values ('${imgUrl}')`,
+                            function (err, result, fields) {
+                                if (err) {
+                                    res.status(500).json({ msg: err });
+                                    return;
+                                }
+                            }
+                        )
+                    }
+                }
+            )
+        }
         dbConn.query(
             `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', convert_tz(now(),'+00:00','-03:00'), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
             function (err, result, fields) {
@@ -203,7 +229,7 @@ router.post(
                     return;
                 }
 
-                res.status(200).json({msg: `Chamado atualizado com sucesso`});
+                res.status(200).json({ msg: `Chamado atualizado com sucesso` });
                 EndConnection(dbConn);
             }
         );
