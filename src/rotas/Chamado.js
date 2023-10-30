@@ -42,12 +42,16 @@ router.post(
 router.post(
     "/cadastro",
     function (req, res) {
+        // Requisições do front-end
         const desc = req.body.desc
         const local = req.body.local
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
         const imgUrl = req.body.imgUrl
+        
+        //Query para inserção de imagem
+        const Qimg = (imgUrl != "") ? `(select arq_cod from Arquivo where arq_caminho = '${imgUrl}')` : "null"
 
         const dbConn = CreateConnection(req.query.dev);
         if (imgUrl != "") {
@@ -76,7 +80,7 @@ router.post(
             )
         }
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
+            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', ${Qimg})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
