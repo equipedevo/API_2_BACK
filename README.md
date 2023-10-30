@@ -266,12 +266,13 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
 # Chamado <span id="chamado"></span>
 ## Cadastro <span id="chamado.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/cadastro`
-Recebe os parâmetros `desc`, `local`, `titulo`, `codFun` e `codEmp`.
+Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`, `imgUrl`.
 * `desc`: Um campo de texto com uma descrição do problema que o chamado referência.
 * `local`: Um campo de texto com uma descrição do local onde o problema referenciado está.
 * `titulo`: Um campo de texto que contém um breve título do chamado.
 * `codFun`: Um campo numérico que vai conter o código do funcíonario responsável pelo chamado.
 * `codEmp`: Um campo numérico com o código da empresa resposável pelo chamado.
+* `imgUrl`: Um campo de texto com o caminho da imagem anexada no chamado.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
