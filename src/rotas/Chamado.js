@@ -48,10 +48,12 @@ router.post(
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
-        const imgUrl = req.body.imgUrl || "null"
+        const imgUrl = req.body.imgUrl
+        if(!imgUrl) imgUrl = "null"
+        else imgUrl = `'${imgUrl}'`
 
         //Query para inserção de imagem
-        const Qimg = `(select arq_cod from Arquivo where arq_caminho = '${imgUrl}')`
+        const Qimg = `(select arq_cod from Arquivo where arq_caminho = ${imgUrl})`
 
         const dbConn = CreateConnection(req.query.dev);
 
@@ -83,7 +85,7 @@ router.post(
             )
         } //Query para fazer insert de um chamado
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00", 0), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', ${Qimg})`,
+            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', (convert_tz(now(),"+00:00","-03:00", 0)), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', ${Qimg})`,
 
             function (err, result, fields) {
                 if (err) {
