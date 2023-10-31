@@ -48,44 +48,45 @@ router.post(
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
-        const imgUrl = req.body.imgUrl
-        if (!imgUrl) { imgUrl = "null" }
-        else { imgUrl = `'${imgUrl}'` }
+        // const imgUrl = req.body.imgUrl
+        // if (!imgUrl) { imgUrl = "null" }
+        // else { imgUrl = `'${imgUrl}'` }
 
-        //Query para inserção de imagem
-        const Qimg = `(select arq_cod from Arquivo where arq_caminho = ${imgUrl})`
+        // //Query para inserção de imagem
+        // const Qimg = `(select arq_cod from Arquivo where arq_caminho = ${imgUrl})`
 
         const dbConn = CreateConnection(req.query.dev);
 
-        //
-        //Verificação se o caminho da imagem ta vazio para fazer o insert da imagem
-        if (imgUrl != "") {
-            dbConn.query(
-                `Select * From Arquivo where arq_caminho = ${imgUrl}`,
-                function (err, result, fields) {
-                    if (err) {
-                        res.status(500).json({ msg: err });
-                        return;
-                    }
+        // //
+        // //Verificação se o caminho da imagem ta vazio para fazer o insert da imagem
+        // if (imgUrl != "") {
+        //     dbConn.query(
+        //         `Select * From Arquivo where arq_caminho = ${imgUrl}`,
+        //         function (err, result, fields) {
+        //             if (err) {
+        //                 res.status(500).json({ msg: err });
+        //                 return;
+        //             }
 
-                    if (result.length > 0) {
-                        return;
-                    }
-                    //insert da imagem na tabela arquivo
-                    dbConn.query(
-                        `Insert into Arquivo(arq_caminho) values ('${imgUrl}')`,
-                        function (err, result, fields) {
-                            if (err) {
-                                res.status(500).json({ msg: err });
-                                return;
-                            }
-                        }
-                    )
-                }
-            )
-        } //Query para fazer insert de um chamado
+        //             if (result.length > 0) {
+        //                 return;
+        //             }
+        //             //insert da imagem na tabela arquivo
+        //             dbConn.query(
+        //                 `Insert into Arquivo(arq_caminho) values ('${imgUrl}')`,
+        //                 function (err, result, fields) {
+        //                     if (err) {
+        //                         res.status(500).json({ msg: err });
+        //                         return;
+        //                     }
+        //                 }
+        //             )
+        //         }
+        //     )
+        // } 
+        //Query para fazer insert de um chamado
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00", 0), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', ${Qimg})`,
+            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', 0, 0)`,
 
             function (err, result, fields) {
                 if (err) {
