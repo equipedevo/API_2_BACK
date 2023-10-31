@@ -48,7 +48,7 @@ router.post(
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
-        const imgUrl = req.body.imgUrl
+        const imgUrl = req.body.imgUrl || ""
 
         //Query para inserção de imagem
         const Qimg = (imgUrl != "") ? `(select arq_cod from Arquivo where arq_caminho = '${imgUrl}')` : "null"
