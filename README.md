@@ -102,6 +102,7 @@ Recebe o parâmetro `emp_cod`.
     msg: "Sucesso",
     funcionarios: [
         {
+            fun_cod: 0,
             fun_nome: "Nome do Funcionário",
             fun_funcao: "função",
             fun_email: "email@gmail.com",
