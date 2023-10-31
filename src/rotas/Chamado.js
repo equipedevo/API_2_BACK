@@ -49,11 +49,14 @@ router.post(
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
         const imgUrl = req.body.imgUrl
-        
+
         //Query para inserção de imagem
         const Qimg = (imgUrl != "") ? `(select arq_cod from Arquivo where arq_caminho = '${imgUrl}')` : "null"
 
         const dbConn = CreateConnection(req.query.dev);
+
+        //
+        //Verificação se o caminho da imagem ta vazio para fazer o insert da imagem
         if (imgUrl != "") {
             dbConn.query(
                 `Select * From Arquivo where arq_caminho = ${imgUrl}`,
@@ -65,31 +68,63 @@ router.post(
 
                     if (result.length > 0) {
                         return;
-                    } else {
-                        dbConn.query(
-                            `Insert into Arquivo(arq_caminho) values ('${imgUrl}')`,
-                            function (err, result, fields) {
-                                if (err) {
-                                    res.status(500).json({ msg: err });
-                                    return;
-                                }
-                            }
-                        )
                     }
+                    //insert da imagem na tabela arquivo
+                    dbConn.query(
+                        `Insert into Arquivo(arq_caminho) values ('${imgUrl}')`,
+                        function (err, result, fields) {
+                            if (err) {
+                                res.status(500).json({ msg: err });
+                                return;
+                            }
+                        }
+                    )
                 }
             )
-        }
+        } //Query para fazer insert de um chamado
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', ${Qimg})`,
+            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00", 0), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', ${Qimg})`,
+
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
                     EndConnection(dbConn);
                     return;
                 }
-
-                res.status(200).json({ msg: `Chamada iniciado com sucesso` });
-                EndConnection(dbConn);
+                //Query para fazer um insert no chat
+                dbConn.query(
+                    `insert into Chat(ct_status) values(1);`,
+                    function (err, result, fields) {
+                        if (err) {
+                            res.status(500).json({ msg: err });
+                            EndConnection(dbConn);
+                            return;
+                        }
+                        //Query para pegar o id da ultima query feita
+                        dbConn.query(
+                            `set @n_cod_chat = LAST_INSERT_ID();`,
+                            function (err, result, fields) {
+                                if (err) {
+                                    res.status(500).json({ msg: err });
+                                    EndConnection(dbConn);
+                                    return;
+                                }
+                                // Query que coloca o codigo do chat criado no respectivo chamado
+                                dbConn.query(
+                                    `update Chamado set ct_cod = @novo_cod_chat where cha_cod = LAST_INSERT_ID();`,
+                                    function (err, result, fields) {
+                                        if (err) {
+                                            res.status(500).json({ msg: err });
+                                            EndConnection(dbConn);
+                                            return;
+                                        }
+                                        res.status(200).json({ msg: "Cadastro feito com sucesso" })
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
             }
         );
     }
