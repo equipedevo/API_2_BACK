@@ -48,16 +48,16 @@ router.post(
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
-        const imgUrl = req.body.imgUrl || ""
+        const imgUrl = req.body.imgUrl || "null"
 
         //Query para inserção de imagem
-        const Qimg = (imgUrl != "") ? `(select arq_cod from Arquivo where arq_caminho = '${imgUrl}')` : "null"
+        const Qimg = `(select arq_cod from Arquivo where arq_caminho = '${imgUrl}')`
 
         const dbConn = CreateConnection(req.query.dev);
 
         //
         //Verificação se o caminho da imagem ta vazio para fazer o insert da imagem
-        if (imgUrl != undefined) {
+        if (imgUrl != "") {
             dbConn.query(
                 `Select * From Arquivo where arq_caminho = ${imgUrl}`,
                 function (err, result, fields) {
