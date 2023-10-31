@@ -247,7 +247,8 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
     fun_nome: "Nome do Funcionário",
     fun_funcao: "Função",
     fun_email: "email",
-    fun_celular: "(12) 99999-9999"
+    fun_celular: "(12) 99999-9999",
+    car_cod: 0
 }
 ```
 * `400` - Erro relacionado aos dados enviados.
