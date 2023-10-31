@@ -84,46 +84,34 @@ router.post(
         //         }
         //     )
         // } 
-        //Query para fazer insert de um chamado
+        //Query para fazer insert no chat
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', 0, 0)`,
-
+            `insert into Chat(ct_status) values(1);`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
                     EndConnection(dbConn);
                     return;
                 }
-                //Query para fazer um insert no chat
+                //Query para pegar o id da ultima query feita
                 dbConn.query(
-                    `insert into Chat(ct_status) values(1);`,
+                    `set @n_cod_chat = LAST_INSERT_ID();`,
                     function (err, result, fields) {
                         if (err) {
                             res.status(500).json({ msg: err });
                             EndConnection(dbConn);
                             return;
                         }
-                        //Query para pegar o id da ultima query feita
+                        //Query para fazer um insert no chamado
                         dbConn.query(
-                            `set @n_cod_chat = LAST_INSERT_ID();`,
+                            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', 0, @n_cod_chat)`,
                             function (err, result, fields) {
                                 if (err) {
                                     res.status(500).json({ msg: err });
                                     EndConnection(dbConn);
                                     return;
                                 }
-                                // Query que coloca o codigo do chat criado no respectivo chamado
-                                dbConn.query(
-                                    `update Chamado set ct_cod = @novo_cod_chat where cha_cod = LAST_INSERT_ID();`,
-                                    function (err, result, fields) {
-                                        if (err) {
-                                            res.status(500).json({ msg: err });
-                                            EndConnection(dbConn);
-                                            return;
-                                        }
-                                        res.status(200).json({ msg: "Cadastro feito com sucesso" })
-                                    }
-                                )
+                                res.status(200).json({ msg: "Cadastro feito com sucesso" })
                             }
                         )
                     }
