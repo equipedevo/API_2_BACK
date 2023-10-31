@@ -195,7 +195,7 @@ router.post(
     "/pegar",
     function(req, res) {
         const fun_cod = req.body.fun_cod;
-        const emp_cod = req.body.fun_cod;
+        const emp_cod = req.body.emp_cod;
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
