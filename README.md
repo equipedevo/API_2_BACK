@@ -8,6 +8,8 @@
 * [Funcionario](#funcionario)
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
+    * [Delete](#funcionario.delete)
+    * [Atualizar](#funcionario.atualizar)
     * [Trocar Senha](#funcionario.trocarSenha)
     * [Pegar](#funcionario.pegar)
 * [Chamado](#chamado)
@@ -198,7 +200,7 @@ Recebe os parâmetros `email` e `senha`.
 
 [Voltar ao topo](#sumário)
 
-## Login <span id="funcionario.trocarSenha"></span>
+## Trocar Senha <span id="funcionario.trocarSenha"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/trocarSenha`
 Recebe os parâmetros `email`, `senha` e `novaSenha`.
 * `email`: Um campo de texto com o e-mail do funcionário.
@@ -230,7 +232,7 @@ Recebe os parâmetros `email`, `senha` e `novaSenha`.
 
 
 
-## Login <span id="funcionario.pegar"></span>
+## Pegar <span id="funcionario.pegar"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/pegar`
 Recebe os parâmetros `fun_cod` e `emp_cod`.
 * `fun_cod`: O código do funcionário.
@@ -252,6 +254,65 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
 {
     msg: "Erro ..."
 }
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Deletar <span id="funcionario.delete"></span>
+### POST - *hermezapi-back.vercel.app/*`funcionario/delete`
+Recebe o parâmetro `fun_cod`.
+* `fun_cod`: Um campo de número com o código do funcionário.
+
+### Retornos
+* `200` - Usuário deletado com sucesso.
+```
+{
+    msg: "Usuário deletado com sucesso!"
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Atualizar <span id="funcionario.atualizar"></span>
+### POST - *hermezapi-back.vercel.app/*`funcionario/atualizar`
+Recebe os parâmetros `fun_cod`, `nome`, `funcao`, `email`, `celular` e `car_cod`.
+* `fun_cod`: Um campo de número com o código do funcionário.
+* `nome`: Um campo de texto com o novo nome do funcionário.
+* `funcao`: Um campo de texto com uma descrição da nova função que o funcionário exercerá.
+* `email`: Um campo de texto com o novo e-mail do funcionário.
+* `celular`: Um campo de texto com o novo número de celular do funcionário.
+* `car_cod`: Um campo de número com o novo id do cargo do funcionário (Funcionário padrão: 1, Técnico: 2, Admin: 3).
+
+### Retornos
+* `200` - Atualização realizada com sucesso.
+```
+{
+    msg: "Dados do usuário atualizados com sucesso!",
+    nome: result[0].fun_nome,
+    email: result[0].fun_email,
+    funcao: result[0].fun_funcao,
+    celular: result[0].fun_celular,
+    car_cod: result[0].car_cod,
+    emp_cod: result[0].emp_cod
+}
+```
+* `400` - Erro devido algum erro de preenchimento ou dado enviado para o back.
+```
+    msg: "Não foi possível atualizar dados do funcionário devido algum erro de preenchimento"
 ```
 * `500` - Erro.
 ```
