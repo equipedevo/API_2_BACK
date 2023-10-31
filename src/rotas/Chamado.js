@@ -57,7 +57,7 @@ router.post(
 
         //
         //Verificação se o caminho da imagem ta vazio para fazer o insert da imagem
-        if (imgUrl != "") {
+        if (imgUrl != undefined) {
             dbConn.query(
                 `Select * From Arquivo where arq_caminho = ${imgUrl}`,
                 function (err, result, fields) {
