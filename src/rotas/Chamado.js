@@ -267,7 +267,7 @@ router.post(
 router.post(
     "/mudarPrioridade",
     function(req, res){
-        priori = req.body.priori
+        const priori = req.body.priori
         const cha_cod = req.body.cha_cod
         const dbConn = createConnection(req.body.dev);
         ddbConn.query(

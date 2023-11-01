@@ -18,7 +18,8 @@
     * [Listar Meus](#chamado.listar.meus)
     * [Pegar um](#chamado.pegar)
     * [Filtro](#chamado.filtro)
-    * [Atualizar status](#chamado.atualizar)
+    * [Atualizar Status](#chamado.statusAtua)
+    * [Atualizar Prioridade](#chamado.prioriAtua)
 * [Chat](#chat)
     * [Nova Mensagem](#chat.novaMensagem)
     * [Mensagens](#chat.mensagens)
@@ -529,10 +530,40 @@ Recebe os parâmetros: `emp_cod`, `priori`, `data`, `func`, `status`, `tipo`.
 
 [Voltar ao topo](#sumário)
 
-## Atualizar Status <span id="chamado.atualizar"></span>
+## Atualizar Status <span id="chamado.statusAtua"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/atualizarStatus`
 Recebe os parâmetros: `sta_cod`, `cha_cod`.
 * `sta_cod`: Um campo numérico com o código do status desejado.
+* `cha_cod`: Um campo numérico com o código do chamado desejado.
+
+### Retornos
+* `200` - Chamado atualizado com sucesso.
+```
+    {
+        msg: Chamado atualizado com sucesso
+    }
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Atualizar Prioridade <span id="chamado.prioriAtua"></span>
+### POST - *hermezapi-back.vercel.app/*`chamado/mudarPrioridade`
+Recebe os parâmetros: `priori`, `cha_cod`.
+* `priori`: Um campo numérico com o número da prioridade desejada.
 * `cha_cod`: Um campo numérico com o código do chamado desejado.
 
 ### Retornos
