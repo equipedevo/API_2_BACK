@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const { CreateConnection, EndConnection } = require("../connection");
+const { createConnection } = require("mysql2");
 
 //
 // ROTA PARA PEGAR TODOS OS CHAMADOS DE UMA EMPRESA
@@ -48,12 +49,10 @@ router.post(
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
-        // const imgUrl = req.body.imgUrl
-        // if (!imgUrl) { imgUrl = "null" }
-        // else { imgUrl = `'${imgUrl}'` }
+        // const imgUrl = req.body.imgUrl || ""
 
         // //Query para inserção de imagem
-        // const Qimg = `(select arq_cod from Arquivo where arq_caminho = ${imgUrl})`
+        // const Qimg = (!imgUrl != "") ? `(select arq_cod from Arquivo where arq_caminho = ${imgUrl})` : 0
 
         const dbConn = CreateConnection(req.query.dev);
 
@@ -257,11 +256,39 @@ router.post(
                     return;
                 }
 
-                res.status(200).json({ msg: `Chamado atualizado com sucesso` });
+                res.status(200).json({ msg: `Status do chamado atualizado com sucesso` });
                 EndConnection(dbConn);
             }
         );
 
+    }
+);
+
+router.post(
+    "/mudarPrioridade",
+    function(req, res){
+        priori = req.body.priori
+        const cha_cod = req.body.cha_cod
+        const dbConn = createConnection(req.body.dev);
+        ddbConn.query(
+            `Update Chamado Set cha_prioridade = ${priori} where cha_cod = ${cha_cod};`,
+            function (err, result, fields) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                if (result.length <= 0) {
+                    res.status(400).json({ msg: `Esse chamado não existe` });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(200).json({ msg: `Prioridade do chamado atualizado com sucesso` });
+                EndConnection(dbConn);
+            }
+        );
     }
 );
 module.exports = router;
