@@ -215,10 +215,10 @@ router.post(
 
                 res.status(200).json({
                     msg: `Funcionário ${fun_cod} da empresa ${emp_cod}`,
-                    nome: result[0].fun_nome,
-                    email: result[0].fun_email,
-                    funcao: result[0].fun_funcao,
-                    celular: result[0].fun_celular
+                    fun_nome: result[0].fun_nome,
+                    fun_email: result[0].fun_email,
+                    fun_funcao: result[0].fun_funcao,
+                    fun_celular: result[0].fun_celular
                 });
                 EndConnection(dbConn);
             }
