@@ -42,8 +42,9 @@ router.post(
             `select msg.msg_texto as texto, arq.arq_caminho as url_arquivo, func.fun_nome, msg.msg_dataEnv
                 from Mensagem msg inner join Arquivo arq on msg.arq_cod = arq.arq_cod
                     inner join Funcionario func on msg.fun_cod = func.fun_cod
-                where ct_cod = ${cha_cod} limit 20 offset ${20 * pag}
-                order by msg.msg_dataEnv desc`,
+                where ct_cod = ${cha_cod}
+                order by msg.msg_dataEnv desc
+                limit 20 offset ${20 * pag}`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });

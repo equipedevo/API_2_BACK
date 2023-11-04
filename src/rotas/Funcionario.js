@@ -164,7 +164,7 @@ router.post(
                                 }
 
                                 dbConn.query(
-                                    `update Funcionario set fun_senha = ${hash} where fun_email = ${email}`,
+                                    `update Funcionario set fun_senha = '${hash}' where fun_email = '${email}'`,
                                     function(err, result, fields) {
                                         if(err) {
                                             res.status(500).json({ msg: err });
@@ -275,7 +275,7 @@ router.post(
                                 }
 
                                 dbConn.query(
-                                    `update Funcionario set fun_senha = ${hash} where fun_email = ${email}`,
+                                    `update Funcionario set fun_senha = '${hash}' where fun_email = '${email}'`,
                                     function(err, result, fields) {
                                         if(err) {
                                             res.status(500).json({ msg: err });
@@ -380,13 +380,7 @@ router.post(
                     return;
                 }
                 res.status(200).json({
-                    msg: "Dados do funcionário atualizados com sucesso!",
-                    nome: result[0].fun_nome,
-                    email: result[0].fun_email,
-                    funcao: result[0].fun_funcao,
-                    celular: result[0].fun_celular,
-                    car_cod: result[0].car_cod,
-                    emp_cod: result[0].emp_cod
+                    msg: "Dados do funcionário atualizados com sucesso!"
                 });
             }
         );

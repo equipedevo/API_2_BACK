@@ -7,6 +7,7 @@ const cors = require("cors");
 const Empresa = require("./rotas/Empresa");
 const Funcionario = require("./rotas/Funcionario");
 const Chamado = require("./rotas/Chamado");
+const Chat = require("./rotas/Chat");
 
 const PORT = process.env.PORT || 3001;
 
@@ -41,5 +42,6 @@ app.get(
 app.use("/empresa", Empresa);
 app.use("/funcionario", Funcionario);
 app.use("/chamado", Chamado);
+app.use("/chat", Chat);
 
 module.exports = app;
