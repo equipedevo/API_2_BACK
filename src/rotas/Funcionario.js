@@ -275,7 +275,7 @@ router.post(
                                 }
 
                                 dbConn.query(
-                                    `update Funcionario set fun_senha = ${hash} where fun_email = ${email}`,
+                                    `update Funcionario set fun_senha = ${hash} where fun_email = '${email}'`,
                                     function(err, result, fields) {
                                         if(err) {
                                             res.status(500).json({ msg: err });
