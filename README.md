@@ -241,10 +241,10 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
 ```
 {
     msg: "Sucesso",
-    fun_nome: "Nome do Funcionário",
-    fun_funcao: "Função",
-    fun_email: "email",
-    fun_celular: "(12) 99999-9999"
+    nome: "Nome do Funcionário",
+    funcao: "Função",
+    email: "email",
+    celular: "(12) 99999-9999"
 }
 ```
 * `400` - Erro relacionado aos dados enviados.
