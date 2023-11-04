@@ -172,9 +172,9 @@ router.post(
         const Qprio = (priori != "") ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, 
         //é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
         // const Qdata = (data != "") ? `c.cha_dataInicio = '${data}' and ` : ""
-        const Qfunc = (func != "") ? `f.fun_nome = '${func}' and ` : ""
-        const Qsta = (status != "") ? `s.sta_nome = '${status}' and ` : ""
-        const Qtip = (tipo != "") ? `se.ser_nome = ${tipo} and ` : ""
+        const Qfunc = (func != "") ? `f.fun_nome = '${func}%' and ` : ""
+        const Qsta = (status != "") ? `s.sta_nome = '${status}%' and ` : ""
+        const Qtip = (tipo != "") ? `se.ser_nome = '${tipo}%' and ` : ""
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
