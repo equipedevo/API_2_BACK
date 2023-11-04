@@ -8,6 +8,8 @@
 * [Funcionario](#funcionario)
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
+    * [Delete](#funcionario.delete)
+    * [Atualizar](#funcionario.atualizar)
     * [Trocar Senha](#funcionario.trocarSenha)
     * [Pegar](#funcionario.pegar)
 * [Chamado](#chamado)
@@ -16,7 +18,8 @@
     * [Listar Meus](#chamado.listar.meus)
     * [Pegar um](#chamado.pegar)
     * [Filtro](#chamado.filtro)
-    * [Atualizar status](#chamado.atualizar)
+    * [Atualizar Status](#chamado.statusAtua)
+    * [Atualizar Prioridade](#chamado.prioriAtua)
 * [Chat](#chat)
     * [Nova Mensagem](#chat.novaMensagem)
     * [Mensagens](#chat.mensagens)
@@ -100,6 +103,7 @@ Recebe o parâmetro `emp_cod`.
     msg: "Sucesso",
     funcionarios: [
         {
+            fun_cod: 0,
             fun_nome: "Nome do Funcionário",
             fun_funcao: "função",
             fun_email: "email@gmail.com",
@@ -198,7 +202,7 @@ Recebe os parâmetros `email` e `senha`.
 
 [Voltar ao topo](#sumário)
 
-## Login <span id="funcionario.trocarSenha"></span>
+## Trocar Senha <span id="funcionario.trocarSenha"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/trocarSenha`
 Recebe os parâmetros `email`, `senha` e `novaSenha`.
 * `email`: Um campo de texto com o e-mail do funcionário.
@@ -230,7 +234,7 @@ Recebe os parâmetros `email`, `senha` e `novaSenha`.
 
 
 
-## Login <span id="funcionario.pegar"></span>
+## Pegar <span id="funcionario.pegar"></span>
 ### POST - *hermezapi-back.vercel.app/*`funcionario/pegar`
 Recebe os parâmetros `fun_cod` e `emp_cod`.
 * `fun_cod`: O código do funcionário.
@@ -244,7 +248,8 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
     fun_nome: "Nome do Funcionário",
     fun_funcao: "Função",
     fun_email: "email",
-    fun_celular: "(12) 99999-9999"
+    fun_celular: "(12) 99999-9999",
+    car_cod: 0
 }
 ```
 * `400` - Erro relacionado aos dados enviados.
@@ -263,15 +268,75 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
 
 [Voltar ao topo](#sumário)
 
+## Deletar <span id="funcionario.delete"></span>
+### POST - *hermezapi-back.vercel.app/*`funcionario/delete`
+Recebe o parâmetro `fun_cod`.
+* `fun_cod`: Um campo de número com o código do funcionário.
+
+### Retornos
+* `200` - Usuário deletado com sucesso.
+```
+{
+    msg: "Usuário deletado com sucesso!"
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Atualizar <span id="funcionario.atualizar"></span>
+### POST - *hermezapi-back.vercel.app/*`funcionario/atualizar`
+Recebe os parâmetros `fun_cod`, `nome`, `funcao`, `email`, `celular` e `car_cod`.
+* `fun_cod`: Um campo de número com o código do funcionário.
+* `nome`: Um campo de texto com o novo nome do funcionário.
+* `funcao`: Um campo de texto com uma descrição da nova função que o funcionário exercerá.
+* `email`: Um campo de texto com o novo e-mail do funcionário.
+* `celular`: Um campo de texto com o novo número de celular do funcionário.
+* `car_cod`: Um campo de número com o novo id do cargo do funcionário (Funcionário padrão: 1, Técnico: 2, Admin: 3).
+
+### Retornos
+* `200` - Atualização realizada com sucesso.
+```
+{
+    msg: "Dados do usuário atualizados com sucesso!",
+    nome: result[0].fun_nome,
+    email: result[0].fun_email,
+    funcao: result[0].fun_funcao,
+    celular: result[0].fun_celular,
+    car_cod: result[0].car_cod,
+    emp_cod: result[0].emp_cod
+}
+```
+* `400` - Erro devido algum erro de preenchimento ou dado enviado para o back.
+```
+    msg: "Não foi possível atualizar dados do funcionário devido algum erro de preenchimento"
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
 # Chamado <span id="chamado"></span>
 ## Cadastro <span id="chamado.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/cadastro`
-Recebe os parâmetros `desc`, `local`, `titulo`, `codFun` e `codEmp`.
+Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`, `imgUrl`.
 * `desc`: Um campo de texto com uma descrição do problema que o chamado referência.
 * `local`: Um campo de texto com uma descrição do local onde o problema referenciado está.
 * `titulo`: Um campo de texto que contém um breve título do chamado.
 * `codFun`: Um campo numérico que vai conter o código do funcíonario responsável pelo chamado.
 * `codEmp`: Um campo numérico com o código da empresa resposável pelo chamado.
+* `imgUrl`: Um campo de texto com o caminho da imagem anexada no chamado.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
@@ -465,10 +530,40 @@ Recebe os parâmetros: `emp_cod`, `priori`, `data`, `func`, `status`, `tipo`.
 
 [Voltar ao topo](#sumário)
 
-## Atualizar Status <span id="chamado.atualizar"></span>
+## Atualizar Status <span id="chamado.statusAtua"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/atualizarStatus`
 Recebe os parâmetros: `sta_cod`, `cha_cod`.
 * `sta_cod`: Um campo numérico com o código do status desejado.
+* `cha_cod`: Um campo numérico com o código do chamado desejado.
+
+### Retornos
+* `200` - Chamado atualizado com sucesso.
+```
+    {
+        msg: Chamado atualizado com sucesso
+    }
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Atualizar Prioridade <span id="chamado.prioriAtua"></span>
+### POST - *hermezapi-back.vercel.app/*`chamado/mudarPrioridade`
+Recebe os parâmetros: `priori`, `cha_cod`.
+* `priori`: Um campo numérico com o número da prioridade desejada.
 * `cha_cod`: Um campo numérico com o código do chamado desejado.
 
 ### Retornos

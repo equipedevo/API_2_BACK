@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const { CreateConnection, EndConnection } = require("../connection");
+const { createConnection } = require("mysql2");
 
 //
 // ROTA PARA PEGAR TODOS OS CHAMADOS DE UMA EMPRESA
@@ -42,24 +43,78 @@ router.post(
 router.post(
     "/cadastro",
     function (req, res) {
+        // Requisições do front-end
         const desc = req.body.desc
         const local = req.body.local
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
+        // const imgUrl = req.body.imgUrl || ""
+
+        // //Query para inserção de imagem
+        // const Qimg = (!imgUrl != "") ? `(select arq_cod from Arquivo where arq_caminho = ${imgUrl})` : 0
 
         const dbConn = CreateConnection(req.query.dev);
+
+        // //
+        // //Verificação se o caminho da imagem ta vazio para fazer o insert da imagem
+        // if (imgUrl != "") {
+        //     dbConn.query(
+        //         `Select * From Arquivo where arq_caminho = ${imgUrl}`,
+        //         function (err, result, fields) {
+        //             if (err) {
+        //                 res.status(500).json({ msg: err });
+        //                 return;
+        //             }
+
+        //             if (result.length > 0) {
+        //                 return;
+        //             }
+        //             //insert da imagem na tabela arquivo
+        //             dbConn.query(
+        //                 `Insert into Arquivo(arq_caminho) values ('${imgUrl}')`,
+        //                 function (err, result, fields) {
+        //                     if (err) {
+        //                         res.status(500).json({ msg: err });
+        //                         return;
+        //                     }
+        //                 }
+        //             )
+        //         }
+        //     )
+        // } 
+        //Query para fazer insert no chat
         dbConn.query(
-            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}')`,
+            `insert into Chat(ct_status) values(1);`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
                     EndConnection(dbConn);
                     return;
                 }
-
-                res.status(200).json({ msg: `Chamada iniciado com sucesso` });
-                EndConnection(dbConn);
+                //Query para pegar o id da ultima query feita
+                dbConn.query(
+                    `set @n_cod_chat = LAST_INSERT_ID();`,
+                    function (err, result, fields) {
+                        if (err) {
+                            res.status(500).json({ msg: err });
+                            EndConnection(dbConn);
+                            return;
+                        }
+                        //Query para fazer um insert no chamado
+                        dbConn.query(
+                            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', 0, @n_cod_chat)`,
+                            function (err, result, fields) {
+                                if (err) {
+                                    res.status(500).json({ msg: err });
+                                    EndConnection(dbConn);
+                                    return;
+                                }
+                                res.status(200).json({ msg: "Cadastro feito com sucesso" })
+                            }
+                        )
+                    }
+                )
             }
         );
     }
@@ -108,7 +163,7 @@ router.post(
         const emp_cod = req.body.emp_cod
 
         const priori = req.body.priori
-        const data = req.body.data
+        // const data = req.body.data
         const func = req.body.func
         const status = req.body.status
         const tipo = req.body.tipo
@@ -116,14 +171,14 @@ router.post(
         //Realização das queries
         const Qprio = (priori != "") ? `c.cha_prioridade = ${priori}, ` : "" // Verifico se o campo está nulo, se não tiver, 
         //é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
-        const Qdata = (data != "") ? `c.cha_dataInicio = '${data}' and ` : ""
-        const Qfunc = (func != "") ? `f.fun_nome = '${func}' and ` : ""
-        const Qsta = (status != "") ? `s.sta_nome = '${status}' and ` : ""
-        const Qtip = (tipo != "") ? `se.ser_nome = ${tipo} and ` : ""
+        // const Qdata = (data != "") ? `c.cha_dataInicio = '${data}' and ` : ""
+        const Qfunc = (func != "") ? `f.fun_nome = '${func}%' and ` : ""
+        const Qsta = (status != "") ? `s.sta_nome = '${status}%' and ` : ""
+        const Qtip = (tipo != "") ? `se.ser_nome = '${tipo}%' and ` : ""
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where ${Qprio}${Qdata}${Qfunc}${Qsta}${Qtip}e.emp_cod = ${emp_cod} order by cha_dataInicio DESC`,
+            `select c.cha_cod, c.cha_desc, c.cha_dataInicio, c.cha_dataFim, c.cha_local, c.cha_titulo, c.cha_prioridade, f.fun_nome, s.sta_nome, tec.fun_nome tecnico, se.ser_nome from Chamado c inner join Funcionario f on c.fun_cod = f.fun_cod left join Funcionario tec on c.tec_cod = tec.fun_cod inner join Status s on c.sta_cod = s.sta_cod inner join Tipo_Servico se on c.ser_cod = se.ser_cod inner join Empresa e on c.emp_cod = e.emp_cod where ${Qprio}${Qfunc}${Qsta}${Qtip}e.emp_cod = ${emp_cod} order by cha_dataInicio DESC`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -201,11 +256,39 @@ router.post(
                     return;
                 }
 
-                res.status(200).json({msg: `Chamado atualizado com sucesso`});
+                res.status(200).json({ msg: `Status do chamado atualizado com sucesso` });
                 EndConnection(dbConn);
             }
         );
 
+    }
+);
+
+router.post(
+    "/mudarPrioridade",
+    function(req, res){
+        const priori = req.body.priori
+        const cha_cod = req.body.cha_cod
+        const dbConn = createConnection(req.body.dev);
+        ddbConn.query(
+            `Update Chamado Set cha_prioridade = ${priori} where cha_cod = ${cha_cod};`,
+            function (err, result, fields) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                if (result.length <= 0) {
+                    res.status(400).json({ msg: `Esse chamado não existe` });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(200).json({ msg: `Prioridade do chamado atualizado com sucesso` });
+                EndConnection(dbConn);
+            }
+        );
     }
 );
 module.exports = router;

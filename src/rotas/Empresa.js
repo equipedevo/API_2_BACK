@@ -118,7 +118,7 @@ router.post(
         
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select fun_nome, fun_funcao, fun_email, fun_celular, car_cod, fun_dataNasc from Funcionario where emp_cod = '${emp_cod}'`,
+            `select fun_cod, fun_nome, fun_funcao, fun_email, fun_celular, car_cod, fun_dataNasc from Funcionario where emp_cod = '${emp_cod}'`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
@@ -135,6 +135,7 @@ router.post(
                 let funcionarios = [];
                 result.forEach(funcionario => {
                     funcionarios.push({
+                        fun_cod: funcionario.fun_cod,
                         fun_nome: funcionario.fun_nome,
                         fun_funcao: funcionario.fun_funcao,
                         fun_email: funcionario.fun_email,
