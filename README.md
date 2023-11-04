@@ -303,13 +303,7 @@ Recebe os parâmetros `fun_cod`, `nome`, `funcao`, `email`, `celular` e `car_cod
 * `200` - Atualização realizada com sucesso.
 ```
 {
-    msg: "Dados do usuário atualizados com sucesso!",
-    nome: result[0].fun_nome,
-    email: result[0].fun_email,
-    funcao: result[0].fun_funcao,
-    celular: result[0].fun_celular,
-    car_cod: result[0].car_cod,
-    emp_cod: result[0].emp_cod
+    msg: "Dados do usuário atualizados com sucesso!"
 }
 ```
 * `400` - Erro devido algum erro de preenchimento ou dado enviado para o back.
