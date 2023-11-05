@@ -5,6 +5,7 @@ const router = express.Router();
 
 const { CreateConnection, EndConnection } = require("../connection");
 const { createConnection } = require("mysql2");
+const { FirebaseWrapper } = require("../firebase");
 
 //
 // ROTA PARA PEGAR TODOS OS CHAMADOS DE UMA EMPRESA
@@ -40,51 +41,56 @@ router.post(
 //
 // ROTA PARA CADASTRAR UM CHAMADO
 //
+function InsertChamado(dbConn, desc, local, titulo, fun_cod, emp_cod, serv, arq_cod, ct_cod, callback) {
+    dbConn.query(
+        `Insert into Chamado(
+                    cha_desc,
+                    cha_dataInicio,
+                    cha_local,
+                    cha_titulo,
+                    fun_cod,
+                    sta_cod,
+                    cha_prioridade,
+                    ser_cod,
+                    emp_cod,
+                    arq_cod,
+                    ct_cod
+                )
+                values (
+                    '${desc}',
+                    convert_tz(now(),"+00:00","-03:00"),
+                    '${local}',
+                    '${titulo}',
+                    '${fun_cod}',
+                    1,
+                    (
+                        select ser_prioridade from Tipo_Servico where ser_nome = '${serv}'
+                    ),
+                    (
+                        select ser_cod from Tipo_Servico where ser_nome = '${serv}'
+                    ),
+                    '${emp_cod}',
+                    ${arq_cod},
+                    ${cha_cod}
+                );`,
+        callback
+    );
+}
 router.post(
     "/cadastro",
-    function (req, res) {
-        // Requisições do front-end
-        const desc = req.body.desc
-        const local = req.body.local
-        const titulo = req.body.titulo
-        const codFun = req.body.codFun
-        const codEmp = req.body.codEmp
-        const serv = req.body.serv
-        // const imgUrl = req.body.imgUrl || ""
+    require("multer")().single("imagem"),
+    async function (req, res) {
+        const desc = req.body.desc;
+        const local = req.body.local;
+        const titulo = req.body.titulo;
+        const fun_cod = req.body.fun_cod;
+        const emp_cod = req.body.emp_cod;
+        const serv = req.body.serv;
 
-        // //Query para inserção de imagem
-        // const Qimg = (!imgUrl != "") ? `(select arq_cod from Arquivo where arq_caminho = ${imgUrl})` : 0
+        const fbWrapper = new FirebaseWrapper();
+        const imgURL = (req.file ? await fbWrapper.StoreImage(req.file, `imagens/chamados/${titulo}`) : "");
 
         const dbConn = CreateConnection(req.query.dev);
-
-        // //
-        // //Verificação se o caminho da imagem ta vazio para fazer o insert da imagem
-        // if (imgUrl != "") {
-        //     dbConn.query(
-        //         `Select * From Arquivo where arq_caminho = ${imgUrl}`,
-        //         function (err, result, fields) {
-        //             if (err) {
-        //                 res.status(500).json({ msg: err });
-        //                 return;
-        //             }
-
-        //             if (result.length > 0) {
-        //                 return;
-        //             }
-        //             //insert da imagem na tabela arquivo
-        //             dbConn.query(
-        //                 `Insert into Arquivo(arq_caminho) values ('${imgUrl}')`,
-        //                 function (err, result, fields) {
-        //                     if (err) {
-        //                         res.status(500).json({ msg: err });
-        //                         return;
-        //                     }
-        //                 }
-        //             )
-        //         }
-        //     )
-        // } 
-        //Query para fazer insert no chat
         dbConn.query(
             `insert into Chat(ct_status) values(1);`,
             function (err, result, fields) {
@@ -93,7 +99,7 @@ router.post(
                     EndConnection(dbConn);
                     return;
                 }
-                //Query para pegar o id da ultima query feita
+                //Query para pegar o id da ultima query feita (Chat)
                 dbConn.query(
                     `set @n_cod_chat = LAST_INSERT_ID();`,
                     function (err, result, fields) {
@@ -102,20 +108,60 @@ router.post(
                             EndConnection(dbConn);
                             return;
                         }
-                        //Query para fazer um insert no chamado
-                        dbConn.query(
-                            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, (select ser_prioridade from Tipo_Servico where ser_nome = '${serv}'), (select ser_cod from Tipo_Servico where ser_nome = '${serv}'), '${codEmp}', 0, @n_cod_chat)`,
-                            function (err, result, fields) {
-                                if (err) {
-                                    res.status(500).json({ msg: err });
-                                    EndConnection(dbConn);
-                                    return;
+
+                        if (req.file) {
+                            dbConn.query(
+                                `insert into Arquivo (arq_caminho) values (${imgURL});`,
+                                function (err, result, fields) {
+                                    if (err) {
+                                        res.status(500).send({ msg: err });
+                                        EndConnection(dbConn);
+                                        return;
+                                    }
+                                    //Query para pegar o id da ultima query feita (Arquivo)
+                                    dbConn.query(
+                                        `set @n_cod_arq = LAST_INSERT_ID();`,
+                                        function (err, result, fields) {
+                                            if (err) {
+                                                res.status(500).json({ msg: err });
+                                                EndConnection(dbConn);
+                                                return;
+                                            }
+
+                                            InsertChamado(dbConn, desc, local, titulo, fun_cod, emp_cod, serv, "@n_cod_arq", "@n_cod_chat",
+                                                function (err, result, fields) {
+                                                    if (err) {
+                                                        res.status(500).json({ msg: err });
+                                                        EndConnection(dbConn);
+                                                        return;
+                                                    }
+
+                                                    res.status(200).json({ msg: "Cadastro feito com sucesso" })
+                                                    EndConnection(dbConn);
+                                                }
+                                            )
+                                        }
+                                    );
                                 }
-                                res.status(200).json({ msg: "Cadastro feito com sucesso" })
-                            }
-                        )
+                            );
+                        }
+                        else {
+                            //Query para fazer um insert no chamado
+                            InsertChamado(dbConn, desc, local, titulo, fun_cod, emp_cod, serv, "0", "@n_cod_chat",
+                                function (err, result, fields) {
+                                    if (err) {
+                                        res.status(500).json({ msg: err });
+                                        EndConnection(dbConn);
+                                        return;
+                                    }
+
+                                    res.status(200).json({ msg: "Cadastro feito com sucesso" })
+                                    EndConnection(dbConn);
+                                }
+                            )
+                        }
                     }
-                )
+                );
             }
         );
     }
@@ -299,7 +345,7 @@ router.post(
 
 router.post(
     "/mudarPrioridade",
-    function(req, res){
+    function (req, res) {
         const priori = req.body.priori
         const cha_cod = req.body.cha_cod
         const dbConn = createConnection(req.body.dev);

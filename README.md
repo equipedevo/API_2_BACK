@@ -354,13 +354,15 @@ Recebe os parâmetros `fun_cod`, `nome`, `funcao`, `email`, `celular` e `car_cod
 # Chamado <span id="chamado"></span>
 ## Cadastro <span id="chamado.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/cadastro`
-Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`, `imgUrl`.
+Deve ser enviado como `FormData` e sem `Content-Type` caso envie uma imagem.
+Recebe os parâmetros `desc`, `local`, `titulo`, `fun_cod`, `emp_cod`, `serv`.
 * `desc`: Um campo de texto com uma descrição do problema que o chamado referência.
 * `local`: Um campo de texto com uma descrição do local onde o problema referenciado está.
 * `titulo`: Um campo de texto que contém um breve título do chamado.
-* `codFun`: Um campo numérico que vai conter o código do funcíonario responsável pelo chamado.
-* `codEmp`: Um campo numérico com o código da empresa resposável pelo chamado.
-* `imgUrl`: Um campo de texto com o caminho da imagem anexada no chamado.
+* `fun_cod`: Um campo numérico que vai conter o código do funcíonario responsável pelo chamado.
+* `emp_cod`: Um campo numérico com o código da empresa resposável pelo chamado.
+* `serv`: Código do tipo.
+* Pode receber também um arquivo.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
@@ -660,11 +662,12 @@ Recebe os parâmetros: `priori`, `cha_cod`.
 # Chat <span id="chat"></span>
 ## Nova Mensagen <span id="chat.novaMensagem"></span>
 ### POST - *hermezapi-back.vercel.app/*`chat/novaMensagem`
+Deve ser enviado como `FormData` e sem `Content-Type` caso envie uma imagem.
 Recebe os parâmetros `msg_texto`, `fun_cod`, `ct_cod`, `arq_cod`.
 * `msg_texto`: Um campo de texto com o texto da mensagem.
 * `fun_cod`: Um campo numérico com o código do funcionário que enviou a mensagem.
 * `ct_cod`: Um campo numérico com o código do chamado a que essa mensagem pertence.
-* `arq_cod`: Um campo numérico com o código arquivo anexado a mensagem (opcional).
+* Pode receber também um arquivo.
 
 ### Retornos
 * `200` - Mensagens retornadas com sucesso.
