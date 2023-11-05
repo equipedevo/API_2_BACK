@@ -8,10 +8,10 @@ const { CreateConnection, EndConnection } = require("../connection");
 router.post(
     "/novaMensagem",
     function(req, res) {
-        const msg_texto = req.post.msg_texto;
-        const fun_cod = req.post.fun_cod;
-        const ct_cod = req.post.ct_cod;
-        const arq_cod = (req.post.arq_cod || "null");
+        const msg_texto = req.body.msg_texto;
+        const fun_cod = req.body.fun_cod;
+        const ct_cod = req.body.ct_cod;
+        const arq_cod = (req.body.arq_cod || "null");
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
