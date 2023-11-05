@@ -174,8 +174,8 @@ router.post(
         //é criado um where buscando esse campo, se for nulo o where também vai ser nulo.
         // const Qdata = (data != "") ? `c.cha_dataInicio = '${data}' and ` : ""
         const Qfunc = (func != "") ? `f.fun_nome LIKE '${func}%' and ` : ""
-        const Qsta = (status != "") ? `s.sta_nome = '${status}' and ` : ""
-        const Qtip = (tipo != "") ? `se.ser_nome = '${tipo}' and ` : ""
+        const Qsta = (status != "") ? `s.sta_nome LIKE '${status}%' and ` : ""
+        const Qtip = (tipo != "") ? `se.ser_nome LIKE '${tipo}%' and ` : ""
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
