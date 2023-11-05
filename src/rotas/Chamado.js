@@ -71,7 +71,7 @@ function InsertChamado(dbConn, desc, local, titulo, fun_cod, emp_cod, serv, arq_
                     ),
                     '${emp_cod}',
                     ${arq_cod},
-                    ${cha_cod}
+                    ${ct_cod}
                 );`,
         callback
     );
