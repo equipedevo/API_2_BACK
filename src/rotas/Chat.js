@@ -23,7 +23,8 @@ router.post(
 
         const fbWrapper = new FirebaseWrapper();
         const imgURL = (req.file ? await fbWrapper.StoreImage(req.file, `imagens/chat/${ct_cod}`) : "");
-
+        
+        const dbConn = CreateConnection(req.query.dev);
         if (req.file) {
             dbConn.query(
                 `insert into Arquivo (arq_caminho) values (${imgURL});`,
@@ -83,7 +84,7 @@ router.post(
         const cha_cod = req.body.cha_cod;
         const pag = (req.body.pag || 0);
 
-        let dbConn = CreateConnection(req.query.dev);
+        const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
             `select msg.msg_texto, func.fun_cod, msg.msg_dataEnv, arq.arq_caminho
                 from Mensagem msg inner join Funcionario func on msg.fun_cod = func.fun_cod
