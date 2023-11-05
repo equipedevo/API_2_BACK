@@ -6,7 +6,7 @@ const router = express.Router();
 const { CreateConnection, EndConnection } = require("../connection");
 
 router.post(
-    "/novaMensagen",
+    "/novaMensagem",
     function(req, res) {
         const msg_texto = req.post.msg_texto;
         const fun_cod = req.post.fun_cod;
