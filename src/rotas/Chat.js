@@ -22,7 +22,7 @@ router.post(
         const ct_cod = req.body.ct_cod;
 
         const fbWrapper = new FirebaseWrapper();
-        const imgURL = (rq.file ? await fbWrapper.StoreImage(req.file, `imagens/chat/${ct_cod}`) : "");
+        const imgURL = (req.file ? await fbWrapper.StoreImage(req.file, `imagens/chat/${ct_cod}`) : "");
 
         if (req.file) {
             dbConn.query(
