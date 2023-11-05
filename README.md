@@ -8,10 +8,11 @@
 * [Funcionario](#funcionario)
     * [Cadastro](#funcionario.cadastro)
     * [Login](#funcionario.login)
-    * [Delete](#funcionario.delete)
-    * [Atualizar](#funcionario.atualizar)
     * [Trocar Senha](#funcionario.trocarSenha)
     * [Pegar](#funcionario.pegar)
+    * [Atribuir Chamado](#funcionario.atribuir.chamado)
+    * [Delete](#funcionario.delete)
+    * [Atualizar](#funcionario.atualizar)
 * [Chamado](#chamado)
     * [Cadastro](#chamado.cadastro)
     * [Listar Todos](#chamado.listar.todos)
@@ -249,6 +250,35 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
     funcao: "Função",
     email: "email",
     celular: "(12) 99999-9999"
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Atribuir Chamado <span id="funcionario.atribuir.chamado"></span>
+### POST - *hermezapi-back.vercel.app/*`funcionario/atribuirChamado`
+Recebe os parâmetros `fun_cod` e `cha_cod`.
+* `fun_cod`: O código do funcionário.
+* `cha_cod`: O código do chamado.
+
+### Retornos
+* `200` - Valores retornados.
+```
+{
+    msg: "Sucesso"
 }
 ```
 * `400` - Erro relacionado aos dados enviados.
