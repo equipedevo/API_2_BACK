@@ -52,7 +52,7 @@ router.post(
                     return;
                 }
     
-                if(result.length > 0) {
+                if(result.length <= 0) {
                     res.status(400).json({ msg: `Nenhuma mensagem encontrada para esse chamado na página ${pag}.` });
                     EndConnection(dbConn);
                     return;
