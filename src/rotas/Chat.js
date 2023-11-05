@@ -39,7 +39,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select msg.msg_texto, func.fun_nome, msg.msg_dataEnv, arq.arq_caminho
+            `select msg.msg_texto, func.fun_cod, msg.msg_dataEnv, arq.arq_caminho
                 from Mensagem msg inner join Funcionario func on msg.fun_cod = func.fun_cod
                     left join Arquivo arq on arq.arq_cod = msg.arq_cod
                 where ct_cod = ${cha_cod}
@@ -53,7 +53,7 @@ router.post(
                 }
     
                 if(result.length <= 0) {
-                    res.status(400).json({ msg: `Nenhuma mensagem encontrada para esse chamado na página ${pag}.` });
+                    res.status(400).json({ msg: `Nenhuma mensagem encontrada para o chamado ${cha_cod} na página ${pag}.` });
                     EndConnection(dbConn);
                     return;
                 }
@@ -63,7 +63,7 @@ router.post(
                     mensagens.push({
                         texto: mensagem.msg_texto,
                         arquivo: mensagem.arq_caminho,
-                        remetente: mensagem.fun_nome,
+                        remetente: mensagem.fun_cod,
                         dataEnvio: mensagem.msg_dataEnv
                     })
                 });

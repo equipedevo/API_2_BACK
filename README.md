@@ -465,7 +465,7 @@ Recebe o parâmetro `emp_cod`, `fun_cod`
 
 [Voltar ao topo](#sumário)
 
-## Listar Meus <span id="chamado.listar.meus.atribuidos"></span>
+## Listar Atribuidos a Mim <span id="chamado.listar.meus.atribuidos"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/getMeusAtribuidos`
 Recebe o parâmetro `emp_cod`, `tec_cod`
 * `emp_cod`: Um campo numérico com o código da empresa.
@@ -704,7 +704,7 @@ Recebe os parâmetros `cha_cod` e `pag`.
         {
             texto: "texto da mensagem",
             arquivo: "url/do/arquivo/da/mensagem",
-            remetente: "nome do remetente",
+            remetente: código do funcionário que enviou a mensagem,
             dataEnvio: "dd/mm/aaaa"
         },
         ...
