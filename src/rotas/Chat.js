@@ -11,7 +11,7 @@ router.post(
         const msg_texto = req.post.msg_texto;
         const fun_cod = req.post.fun_cod;
         const ct_cod = req.post.ct_cod;
-        const arq_cod = (req.post.arq_cod || null);
+        const arq_cod = (req.post.arq_cod || "null");
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
