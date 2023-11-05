@@ -354,13 +354,14 @@ Recebe os parâmetros `fun_cod`, `nome`, `funcao`, `email`, `celular` e `car_cod
 # Chamado <span id="chamado"></span>
 ## Cadastro <span id="chamado.cadastro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/cadastro`
-Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`, `imgUrl`.
+Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`, `imgUrl`, `serv`
 * `desc`: Um campo de texto com uma descrição do problema que o chamado referência.
 * `local`: Um campo de texto com uma descrição do local onde o problema referenciado está.
 * `titulo`: Um campo de texto que contém um breve título do chamado.
 * `codFun`: Um campo numérico que vai conter o código do funcíonario responsável pelo chamado.
 * `codEmp`: Um campo numérico com o código da empresa resposável pelo chamado.
 * `imgUrl`: Um campo de texto com o caminho da imagem anexada no chamado.
+* `serv`: Um campo de texto com o nome do tipo de serviço do chamado
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
@@ -381,8 +382,8 @@ Recebe os parâmetros `desc`, `local`, `titulo`, `codFun`, `codEmp`, `imgUrl`.
 
 ## Listar Todos <span id="chamado.listar.todos"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/getTodos`
-Recebe o parâmetro `codEmp`.
-* `codEmp`: Um campo numérico com o código da empresa.
+Recebe o parâmetro `emp_cod`.
+* `emp_cod`: Um campo numérico com o código da empresa.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
@@ -551,10 +552,9 @@ Recebe o parâmetro `emp_cod`, `fun_cod`, `cha_cod`
 
 ## Filtro <span id="chamado.filtro"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/getComFiltro`
-Recebe os parâmetros: `emp_cod`, `priori`, `data`, `func`, `status`, `tipo`.
+Recebe os parâmetros: `emp_cod`, `priori`, `func`, `status`, `tipo`.
 * `emp_cod`: Um campo numérico com o código da empresa.
 * `priori`: Um campo numérico com o número da prioridade do chamado.
-* `data`: Um campo de texto com a data do chamado.
 * `func`: Um campo de texto com o nome do funcionário responsável pelo chamado.
 * `status`: Um campo de texto com o status do chamado.
 * `tipo`: Um campo de texto com o tipo de serviço do chamado.
