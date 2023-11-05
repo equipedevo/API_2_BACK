@@ -17,6 +17,7 @@
     * [Cadastro](#chamado.cadastro)
     * [Listar Todos](#chamado.listar.todos)
     * [Listar Meus](#chamado.listar.meus)
+    * [Listar Atribuidos a Mim](#chamado.listar.meus.atribuidos)
     * [Pegar um](#chamado.pegar)
     * [Filtro](#chamado.filtro)
     * [Atualizar Status](#chamado.statusAtua)
@@ -423,9 +424,52 @@ Recebe o parâmetro `codEmp`.
 
 ## Listar Meus <span id="chamado.listar.meus"></span>
 ### POST - *hermezapi-back.vercel.app/*`chamado/getMeus`
-Recebe o parâmetro `codEmp`, `fun_cod`
+Recebe o parâmetro `emp_cod`, `fun_cod`
 * `emp_cod`: Um campo numérico com o código da empresa.
 * `fun_cod`: Um campo numérico com o código do funcionário.
+
+### Retornos
+* `200` - Cadastro feito com sucesso.
+```
+        [
+            {
+                cha_cod: 1,
+                cha_desc: "Problema do chamado",
+                cha_dataInicio: "2001-09-11T03:55:59.000Z",
+                cha_dataFim: "2002-10-21T03:55:59.000Z",
+                cha_local: "Local do problema",
+                cha_titulo: "Título do problema",
+                cha_prioridade: "2",
+                sta_nome: "Status tal",
+                tecnico: "Tecnico tal",
+                ser_nome: "Serviço tal"
+            },
+                ...
+        ]
+
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Listar Meus <span id="chamado.listar.meus.atribuidos"></span>
+### POST - *hermezapi-back.vercel.app/*`chamado/getMeusAtribuidos`
+Recebe o parâmetro `emp_cod`, `tec_cod`
+* `emp_cod`: Um campo numérico com o código da empresa.
+* `tec_cod`: Um campo numérico com o código do tecnico.
 
 ### Retornos
 * `200` - Cadastro feito com sucesso.
