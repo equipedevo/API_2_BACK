@@ -39,12 +39,12 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select msg.msg_texto as texto, arq.arq_caminho as url_arquivo, func.fun_nome, msg.msg_dataEnv
-                from Mensagem msg inner join Arquivo arq on msg.arq_cod = arq.arq_cod
-                    inner join Funcionario func on msg.fun_cod = func.fun_cod
+            `select msg.msg_texto, func.fun_nome, msg.msg_dataEnv, arq.arq_caminho
+                from Mensagem msg inner join Funcionario func on msg.fun_cod = func.fun_cod
+                    left join Arquivo arq on arq.arq_cod = msg.arq_cod
                 where ct_cod = ${cha_cod}
                 order by msg.msg_dataEnv desc
-                limit 20 offset ${20 * pag}`,
+                limit 20 offset ${20 * pag};`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
@@ -61,10 +61,10 @@ router.post(
                 let mensagens = [];
                 result.forEach(mensagem => {
                     mensagens.push({
-                        texto: mensagem.texto,
-                        arquivo: mensagem.url_arquivo,
+                        texto: mensagem.msg_texto,
+                        arquivo: mensagem.arq_caminho,
                         remetente: mensagem.fun_nome,
-                        dataEnvio: mensagem.dataEnvio
+                        dataEnvio: mensagem.msg_dataEnv
                     })
                 });
                 res.status(200).json({
