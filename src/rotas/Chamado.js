@@ -49,6 +49,7 @@ router.post(
         const titulo = req.body.titulo
         const codFun = req.body.codFun
         const codEmp = req.body.codEmp
+        const serv = req.body.serv
         // const imgUrl = req.body.imgUrl || ""
 
         // //Query para inserção de imagem
@@ -103,7 +104,7 @@ router.post(
                         }
                         //Query para fazer um insert no chamado
                         dbConn.query(
-                            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, 6, '${codEmp}', 0, @n_cod_chat)`,
+                            `Insert into Chamado(cha_desc, cha_dataInicio, cha_local, cha_titulo, fun_cod, sta_cod, cha_prioridade, ser_cod, emp_cod, arq_cod, ct_cod) values ('${desc}', convert_tz(now(),"+00:00","-03:00"), '${local}', '${titulo}','${codFun}', 1, 2, (select ser_cod where ser_nome = '${serv}'), '${codEmp}', 0, @n_cod_chat)`,
                             function (err, result, fields) {
                                 if (err) {
                                     res.status(500).json({ msg: err });
