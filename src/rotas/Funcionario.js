@@ -199,7 +199,7 @@ router.post(
 
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select fun_nome, fun_funcao, fun_email, fun_celular from Funcionario where fun_cod = ${fun_cod} and emp_cod = ${emp_cod}`,
+            `select fun_nome, fun_funcao, fun_email, fun_celular, car_cod from Funcionario where fun_cod = ${fun_cod} and emp_cod = ${emp_cod}`,
             function(err, result, fields) {
                 if(err) {
                     res.status(500).json({ msg: err });
@@ -215,10 +215,11 @@ router.post(
 
                 res.status(200).json({
                     msg: `Funcionário ${fun_cod} da empresa ${emp_cod}`,
-                    fun_nome: result[0].fun_nome,
-                    fun_email: result[0].fun_email,
-                    fun_funcao: result[0].fun_funcao,
-                    fun_celular: result[0].fun_celular
+                    nome: result[0].fun_nome,
+                    funcao: result[0].fun_funcao,
+                    email: result[0].fun_email,
+                    celular: result[0].fun_celular,
+                    car_cod: result[0].car_cod
                 });
                 EndConnection(dbConn);
             }

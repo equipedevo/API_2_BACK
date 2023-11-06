@@ -250,7 +250,8 @@ Recebe os parâmetros `fun_cod` e `emp_cod`.
     nome: "Nome do Funcionário",
     funcao: "Função",
     email: "email",
-    celular: "(12) 99999-9999"
+    celular: "(12) 99999-9999",
+    car_cod: código do cargo
 }
 ```
 * `400` - Erro relacionado aos dados enviados.
@@ -662,7 +663,7 @@ Recebe os parâmetros: `priori`, `cha_cod`.
 ## Nova Mensagen <span id="chat.novaMensagem"></span>
 ### POST - *hermezapi-back.vercel.app/*`chat/novaMensagem`
 Deve ser enviado como `FormData` e sem `Content-Type` caso envie uma imagem.
-Recebe os parâmetros `msg_texto`, `fun_cod`, `ct_cod`, `arq_cod`.
+Recebe os parâmetros `msg_texto`, `fun_cod`, `ct_cod`.
 * `msg_texto`: Um campo de texto com o texto da mensagem.
 * `fun_cod`: Um campo numérico com o código do funcionário que enviou a mensagem.
 * `ct_cod`: Um campo numérico com o código do chamado a que essa mensagem pertence.
