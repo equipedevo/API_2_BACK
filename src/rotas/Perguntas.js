@@ -34,4 +34,28 @@ router.post(
     }
 );
 
+router.post(
+    "/cadastrar",
+    function (req, res) {
+        const per = req.body.per
+        const resp = req.body.resp
+        const emp_cod = req.body.emp_cod
+        const dbConn = CreateConnection(req.query.dev);
+        dbConn.query(
+            `insert into Perguntas (per_desc, per_resposta, emp_cod) values ("${per}", "${resp}", ${emp_cod})`,
+            function (err, result, fields) {
+                if (err) {
+                    res.status(500).json({ msg: err });
+                    EndConnection(dbConn);
+                    return;
+                }
+
+                res.status(200).json({ msg: "Pergunta cadastrada com sucesso" });
+                EndConnection(dbConn);
+            }
+        );
+
+    }
+);
+
 module.exports = router;
