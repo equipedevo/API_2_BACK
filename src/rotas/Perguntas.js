@@ -12,7 +12,7 @@ router.post(
         const emp_cod = req.body.emp_cod
         const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select * from Perguntas where emp_cod = ${emp_cod};`,
+            `select (per_cod, per_desc, per_resposta) from Perguntas where emp_cod = ${emp_cod};`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
