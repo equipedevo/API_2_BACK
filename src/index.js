@@ -41,6 +41,20 @@ app.get(
     }
 );
 
+app.get(
+    "/perguntas/cadastrar",
+    function (req,res) {
+        res.sendFile(__dirname+"/baba.html")
+    }
+)
+
+app.get(
+    "/perguntas/getTodas",
+    function (req,res) {
+        res.sendFile(__dirname+"/bubu.html")
+    }
+)
+
 app.use("/empresa", Empresa);
 app.use("/funcionario", Funcionario);
 app.use("/chamado", Chamado);
