@@ -25,6 +25,9 @@
 * [Chat](#chat)
     * [Nova Mensagem](#chat.novaMensagem)
     * [Mensagens](#chat.mensagens)
+* [Relatório](#relatorio)
+    * [Prioridade No Periodo](#relatorio.prioridadeNoPeriodo)
+    * [Status No Periodo](#relatorio.statusNoPeriodo)
 
 <br>
 
@@ -711,6 +714,79 @@ Recebe os parâmetros `cha_cod` e `pag`.
             dataEnvio: "dd/mm/aaaa"
         },
         ...
+    ]
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+# Relatorio <span id="relatorio"></span>
+## Prioridade No Periodo <span id="relatorio.prioridadeNoPeriodo"></span>
+### POST - *hermezapi-back.vercel.app/*`relatorio/prioridadeNoPeriodo`
+Recebe os parâmetros `inicioPeriodo`, `fimPeriodo`, `prioridade`.
+* `inicioPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o início do período.
+* `fimPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o fim do período.
+* `prioridade`: Um campo numérico com o código da prioridade dos chamados.
+
+### Retornos
+* `200` - Chamados retornados com sucesso.
+```
+{
+    msg: "Sucesso",
+    chamados: [
+        cha_cod,
+        cha_cod,
+        cha_cod,
+        cha_cod
+    ]
+}
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Status No Periodo <span id="relatorio.statusNoPeriodo"></span>
+### POST - *hermezapi-back.vercel.app/*`relatorio/statusNoPeriodo`
+Recebe os parâmetros `inicioPeriodo`, `fimPeriodo`, `status`.
+* `inicioPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o início do período.
+* `fimPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o fim do período.
+* `status`: Um campo numérico com o código do status dos chamados.
+
+### Retornos
+* `200` - Chamados retornados com sucesso.
+```
+{
+    msg: "Sucesso",
+    chamados: [
+        cha_cod,
+        cha_cod,
+        cha_cod,
+        cha_cod
     ]
 }
 ```

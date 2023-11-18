@@ -8,6 +8,7 @@ const Empresa = require("./rotas/Empresa");
 const Funcionario = require("./rotas/Funcionario");
 const Chamado = require("./rotas/Chamado");
 const Chat = require("./rotas/Chat");
+const Relatorio = require("./rotas/Relatorio");
 
 const PORT = process.env.PORT || 3001;
 
@@ -43,5 +44,6 @@ app.use("/empresa", Empresa);
 app.use("/funcionario", Funcionario);
 app.use("/chamado", Chamado);
 app.use("/chat", Chat);
+app.use("/relatorio", Relatorio);
 
 module.exports = app;
