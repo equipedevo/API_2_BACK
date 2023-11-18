@@ -9,6 +9,8 @@ const Funcionario = require("./rotas/Funcionario");
 const Chamado = require("./rotas/Chamado");
 const Chat = require("./rotas/Chat");
 const Relatorio = require("./rotas/Relatorio");
+const Perguntas = require("./rotas/Perguntas");
+
 
 const PORT = process.env.PORT || 3001;
 
@@ -45,5 +47,6 @@ app.use("/funcionario", Funcionario);
 app.use("/chamado", Chamado);
 app.use("/chat", Chat);
 app.use("/relatorio", Relatorio);
+app.use("/perguntas", Perguntas);
 
 module.exports = app;

@@ -28,7 +28,9 @@
 * [Relatório](#relatorio)
     * [Prioridade No Periodo](#relatorio.prioridadeNoPeriodo)
     * [Status No Periodo](#relatorio.statusNoPeriodo)
-
+* [Perguntas](#perguntas)
+    * [Cadastrar](#perguntas.cadastrar)
+    * [Listar](#perguntas.listar)
 <br>
 
 # Empresa <span id="empresa"></span>
@@ -806,4 +808,62 @@ Recebe os parâmetros `inicioPeriodo`, `fimPeriodo`, `status`.
 
 [Voltar ao topo](#sumário)
 
+# Perguntas <span id="perguntas"></span>
+## Cadastrar <span id="perguntas.cadastrar"></span>
+### POST - *hermezapi-back.vercel.app/*`perguntas/cadastrar`
+Recebe os parâmetros `per`, `resp`, `emp_cod`.
+* `per`: Um campo de texto com a pergunta que queira cadastrar.
+* `resp`: Um campo de texto com a resposta a pergunta cadastrada.
+* `emp_cod`: Um campo númerico com o código da empresa responsável pela pergunta.
 
+### Retornos
+* `200` - Cadastro feito com sucesso.
+```
+{
+    msg: "Pergunta cadastrada com sucesso"
+}
+```
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
+
+## Listar <span id="perguntas.listar"></span>
+### POST - *hermezapi-back.vercel.app/*`perguntas/getTodas`
+Recebe o parâmetro `emp_cod`.
+* `emp_cod`: Um campo numérico com o código da empresa.
+
+### Retornos
+* `200` - Cadastro feito com sucesso.
+```
+        [
+            {
+                per_cod: 1,
+                per_desc: "Pergunta tal",
+                per_resposta: "Resposta a pertunta tal",
+            },
+                ...
+        ]
+
+```
+* `400` - Erro relacionado aos dados enviados.
+```
+{
+    msg: "Erro ..."
+}
+```
+
+* `500` - Erro.
+```
+{
+    msg: "Erro ..."
+}
+```
+<hr>
+
+[Voltar ao topo](#sumário)
