@@ -348,7 +348,7 @@ router.post(
     function (req, res) {
         const priori = req.body.priori
         const cha_cod = req.body.cha_cod
-        const dbConn = createConnection(req.query.dev);
+        const dbConn = CreateConnection(req.query.dev);
         dbConn.query(
             `Update Chamado Set cha_prioridade = ${priori} where cha_cod = ${cha_cod};`,
             function (err, result, fields) {
