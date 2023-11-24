@@ -14,7 +14,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where (cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFrim <= ${fimPeriodo}) and (cha_prioridade = ${prioridade})`,
+            `select cha_cod from Chamado where (cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo}) and (cha_prioridade = ${prioridade})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
