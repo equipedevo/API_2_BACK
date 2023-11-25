@@ -28,7 +28,7 @@ router.post(
                     return;
                 }
 
-                resultado = result.map(res => {return { cha_cod: res.cha_cod }});
+                const resultado = result.map(res => {return { cha_cod: res.cha_cod }});
                 res.status(200).json({
                     msg: `${result.length} chamados com a prioridade ${prioridade} encontrados no período de ${inicioPeriodo} a ${fimPeriodo}.`,
                     chamados: resultado
