@@ -15,7 +15,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (cha_prioridade = ${prioridade}) and (cha_cod = ${cha_cod})`,
+            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (cha_prioridade = ${prioridade}) and (emp_cod = ${emp_cod})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -50,7 +50,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (sta_cod = ${status}) and (cha_cod = ${cha_cod})`,
+            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (sta_cod = ${status}) and (emp_cod = ${emp_cod})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
