@@ -48,7 +48,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where (cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFrim <= ${fimPeriodo}) and (sta_cod = ${status})`,
+            `select cha_cod from Chamado where (cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo}) and (sta_cod = ${status})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -62,7 +62,7 @@ router.post(
                     return;
                 }
 
-                resultado = result.map(res => {return { cha_cod: res.cha_cod }});
+                const resultado = result.map(res => {return { cha_cod: res.cha_cod }});
                 res.status(200).json({
                     msg: `${result.length} chamados com o status ${status} encontrados no período de ${inicioPeriodo} a ${fimPeriodo}.`,
                     chamados: resultado
