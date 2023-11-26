@@ -11,10 +11,11 @@ router.post(
         const inicioPeriodo = req.body.inicioPeriodo;
         const fimPeriodo = req.body.fimPeriodo;
         const prioridade = req.body.prioridade;
+        const emp_cod = req.body.emp_cod;
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (cha_prioridade = ${prioridade})`,
+            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (cha_prioridade = ${prioridade}) and (cha_cod = ${cha_cod})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -45,10 +46,11 @@ router.post(
         const inicioPeriodo = req.body.inicioPeriodo;
         const fimPeriodo = req.body.fimPeriodo;
         const status = req.body.status;
+        const emp_cod = req.body.emp_cod;
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (sta_cod = ${status})`,
+            `select cha_cod from Chamado where ((cha_dataInicio >= ${inicioPeriodo}) or (cha_dataFim <= ${fimPeriodo})) and (sta_cod = ${status}) and (cha_cod = ${cha_cod})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });

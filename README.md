@@ -742,6 +742,7 @@ Recebe os parâmetros `inicioPeriodo`, `fimPeriodo`, `prioridade`.
 * `inicioPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o início do período.
 * `fimPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o fim do período.
 * `prioridade`: Um campo numérico com o código da prioridade dos chamados.
+* `emp_cod`: Um campo numérico com o código da empresa.
 
 ### Retornos
 * `200` - Chamados retornados com sucesso.
@@ -778,6 +779,7 @@ Recebe os parâmetros `inicioPeriodo`, `fimPeriodo`, `status`.
 * `inicioPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o início do período.
 * `fimPeriodo`: Um campo de data com o formato `YYYY-mm-dd` para o fim do período.
 * `status`: Um campo numérico com o código do status dos chamados.
+* `emp_cod`: Um campo numérico com o código da empresa.
 
 ### Retornos
 * `200` - Chamados retornados com sucesso.
