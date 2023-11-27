@@ -15,7 +15,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where (cha_dataInicio between '${inicioPeriodo}' and '${fimPeriodo}') and (cha_prioridade = ${prioridade}) and (emp_cod = ${emp_cod})`,
+            `select cha_cod from Chamado where (cha_dataInicio between date_sub('${inicioPeriodo}', interval 1 day) and date_add('${fimPeriodo}', interval 1 day)) and (cha_prioridade = ${prioridade}) and (emp_cod = ${emp_cod})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
@@ -50,7 +50,7 @@ router.post(
 
         let dbConn = CreateConnection(req.query.dev);
         dbConn.query(
-            `select cha_cod from Chamado where (cha_dataInicio between '${inicioPeriodo}' and '${fimPeriodo}') and (sta_cod = ${status}) and (emp_cod = ${emp_cod})`,
+            `select cha_cod from Chamado where (cha_dataInicio between date_sub('${inicioPeriodo}', interval 1 day) and date_add('${fimPeriodo}', interval 1 day)) and (sta_cod = ${status}) and (emp_cod = ${emp_cod})`,
             function (err, result, fields) {
                 if (err) {
                     res.status(500).json({ msg: err });
